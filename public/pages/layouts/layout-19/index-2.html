@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title>Exon Admin Dashboard Template</title>
+        <meta name="description" content="Exon Admin Dashboard Template">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/png" href="../../../assets/favicon.png">
+        <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon.png">
+
+        <link rel="stylesheet" href="../../../css/vendor.css">
+
+        <!-- Fontawesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
+        <!-- Dosis & Poppins Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;523;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        
+        
+
+
+        <link rel="stylesheet" href="../../../layouts/layout-19/css/app.css">
+
+        
+        
+
+
+        <script type="text/javascript">
+
+            window.ROOT_URL = "../../.."
+
+        </script>
+
+    </head>
+
+    <body>
+
+        
+        
+        <!-- Wrapper Arround The Page -->
+        <div class="page-wrapper sidebar-open ">
+
+            <!-- Sidebar -->
+            <nav id="sidebar" class="sidebar">
+                <div class="sidebar-brand">
+                    <img src="../../../assets/layouts/logos/logo.png" class="img" alt="">
+                    <img src="../../../assets/layouts/logos/logo-sm.png" class="img-sm" alt="">
+                </div>
+                <hr>
+                <ul class="sidebar-menu">
+                    <li class="active current">
+                        <a href="../../../">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 5 C 12.1 5 9 8.1 9 12 C 9 14.4375 10.209961 16.561523 12.070312 17.8125 C 8.5100119 19.34733 6 22.893578 6 27 L 8 27 C 8 22.6 11.6 19 16 19 C 17.2 19 18.400391 19.300781 19.400391 19.800781 C 19.700391 19.200781 20 18.599609 20.5 18.099609 C 20.300978 18.000099 20.095641 17.921082 19.892578 17.833984 C 21.77227 16.586133 23 14.452401 23 12 C 23 8.1 19.9 5 16 5 z M 16 7 C 18.8 7 21 9.2 21 12 C 21 14.8 18.8 17 16 17 C 13.2 17 11 14.8 11 12 C 11 9.2 13.2 7 16 7 z M 25 18 C 22.8 18 21 19.8 21 22 L 21 24 L 18 24 L 18 32 L 32 32 L 32 24 L 29 24 L 29 22 C 29 19.8 27.2 18 25 18 z M 25 20 C 26.1 20 27 20.9 27 22 L 27 24 L 23 24 L 23 22 C 23 20.9 23.9 20 25 20 z M 20 26 L 30 26 L 30 30 L 20 30 L 20 26 z"/></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 5.9375 L 15.625 6.0625 L 5.625 10.0625 L 3.3125 11 L 5.625 11.9375 L 9.53125 13.5 L 5.625 15.0625 L 3.3125 16 L 5.625 16.9375 L 9.53125 18.5 L 5.625 20.0625 L 3.3125 21 L 5.625 21.9375 L 15.625 25.9375 L 16 26.0625 L 16.375 25.9375 L 26.375 21.9375 L 28.6875 21 L 26.375 20.0625 L 22.46875 18.5 L 26.375 16.9375 L 28.6875 16 L 26.375 15.0625 L 22.46875 13.5 L 26.375 11.9375 L 28.6875 11 L 26.375 10.0625 L 16.375 6.0625 Z M 16 8.09375 L 23.28125 11 L 16 13.90625 L 8.71875 11 Z M 12.25 14.59375 L 15.625 15.9375 L 16 16.0625 L 16.375 15.9375 L 19.75 14.59375 L 23.28125 16 L 16 18.90625 L 8.71875 16 Z M 12.25 19.59375 L 15.625 20.9375 L 16 21.0625 L 16.375 20.9375 L 19.75 19.59375 L 23.28125 21 L 16 23.90625 L 8.71875 21 Z"/></svg>
+                            <span>Layouts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 6 3 L 6 29 L 26 29 L 26 3 Z M 8 5 L 24 5 L 24 27 L 8 27 Z M 10 7 L 10 13 L 22 13 L 22 7 Z M 12 9 L 20 9 L 20 11 L 12 11 Z M 11 15 L 11 17 L 13 17 L 13 15 Z M 15 15 L 15 17 L 17 17 L 17 15 Z M 19 15 L 19 17 L 21 17 L 21 15 Z M 11 19 L 11 21 L 13 21 L 13 19 Z M 15 19 L 15 21 L 17 21 L 17 19 Z M 19 19 L 19 21 L 21 21 L 21 19 Z M 11 23 L 11 25 L 13 25 L 13 23 Z M 15 23 L 15 25 L 17 25 L 17 23 Z M 19 23 L 19 25 L 21 25 L 21 23 Z"/></svg>
+                            <span>Applications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 6 4 L 6 28 L 26 28 L 26 4 Z M 8 6 L 24 6 L 24 11 L 8 11 Z M 8 13 L 24 13 L 24 19 L 8 19 Z M 8 21 L 24 21 L 24 26 L 8 26 Z"/></svg>
+                            <span>UI Elements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 5 5 L 5 27 L 27 27 L 27 5 L 5 5 z M 7 7 L 15 7 L 15 15 L 7 15 L 7 7 z M 17 7 L 25 7 L 25 15 L 17 15 L 17 7 z M 7 17 L 15 17 L 15 25 L 7 25 L 7 17 z M 17 17 L 25 17 L 25 25 L 17 25 L 17 17 z"/></svg>
+                            <span>Components</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 10 5 L 10 7 L 12 7 C 13.667969 7 15 8.332031 15 10 L 15 14 L 12 14 L 12 16 L 15 16 L 15 22 C 15 23.667969 13.667969 25 12 25 L 10 25 L 10 27 L 12 27 C 13.632813 27 15.085938 26.1875 16 24.96875 C 16.914063 26.1875 18.367188 27 20 27 L 22 27 L 22 25 L 20 25 C 18.332031 25 17 23.667969 17 22 L 17 16 L 20 16 L 20 14 L 17 14 L 17 10 C 17 8.332031 18.332031 7 20 7 L 22 7 L 22 5 L 20 5 C 18.367188 5 16.914063 5.8125 16 7.03125 C 15.085938 5.8125 13.632813 5 12 5 Z"/></svg>
+                            <span>Form</span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+
+                <div class="sidebar-footer">
+                    <img src="../../../assets/svg/undraw/undraw_fitness_tracker_3033.svg" alt="Download App" class="img-responsive">
+
+                    <h6>Get the mobile app</h6>
+
+                    <a href="#" role="button" class="btn btn-icon btn-square btn-dark">
+                        <i class="fab fa-apple"></i>
+                    </a>
+                    <a href="#" role="button" class="btn btn-icon btn-square btn-dark">
+                        <i class="fab fa-google-play"></i>
+                    </a>
+                </div>
+            </nav>
+            <!-- / Sidebar -->
+
+            <main class="main-content">
+
+                <div class="sidebar-backdrop"></div>
+
+                <div class="page-container">
+
+                    <!-- Header Nav -->
+                    <div class="navigation-wrapper">
+
+                        <nav class="navbar navbar-top navbar-expand-lg navbar-light bg-white">
+                            <div class="container-fluid">
+                                <button class="navbar-toggler navbar-toggler-css navbar-menu-toggler collapsed sidebar-toggler">
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                </button>
+                                <button class="navbar-toggler navbar-toggler-css-reverse navbar-menu-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar-top-collapsible" aria-controls="navbar-top-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                </button>
+
+                                <div class="collapse navbar-collapse" id="navbar-top-collapsible">
+                                    <div class="form-search-container">
+                                        <form class="form-search" action="#">
+                                            <div class="input-group input-group-rounded input-group-merged input-group-search">
+                                                <input type="search" class="form-control" placeholder="Search...">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-light btn-merge btn-icon" type="button">
+                                                        <svg id="lnr-magnifier" viewBox="0 0 1024 1024"><path class="path1" d="M966.070 981.101l-304.302-331.965c68.573-71.754 106.232-165.549 106.232-265.136 0-102.57-39.942-199-112.47-271.53s-168.96-112.47-271.53-112.47-199 39.942-271.53 112.47-112.47 168.96-112.47 271.53 39.942 199.002 112.47 271.53 168.96 112.47 271.53 112.47c88.362 0 172.152-29.667 240.043-84.248l304.285 331.947c5.050 5.507 11.954 8.301 18.878 8.301 6.179 0 12.378-2.226 17.293-6.728 10.421-9.555 11.126-25.749 1.571-36.171zM51.2 384c0-183.506 149.294-332.8 332.8-332.8s332.8 149.294 332.8 332.8-149.294 332.8-332.8 332.8-332.8-149.294-332.8-332.8z"></path></svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                        <nav class="navbar navbar-toolbar navbar-expand-lg navbar-light">
+                            <div class="container-fluid">
+                                <ul class="navbar-nav navbar-menu-primary">
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle dropdown-nocaret position-relative" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg fill="#333333" width="20" height="20" viewBox="0 0 17 17"><g></g><path d="M17 6.75c0 2.343-1.906 4.25-4.25 4.25h-2.757v-1h2.757c1.792 0 3.25-1.458 3.25-3.25s-1.458-3.25-3.25-3.25c-0.532 0-1.057 0.141-1.56 0.417l-0.354 0.195-0.265-0.306c-0.719-0.829-1.748-1.306-2.821-1.306-1.661 0-3.099 1.080-3.576 2.688l-0.126 0.422-0.435-0.072c-0.119-0.019-0.238-0.038-0.363-0.038-1.24 0-2.25 1.009-2.25 2.25s1.010 2.25 2.25 2.25h3.699v1h-3.699c-1.792 0-3.25-1.458-3.25-3.25 0-1.826 1.529-3.335 3.353-3.248 0.713-1.812 2.431-3.002 4.397-3.002 1.234 0 2.42 0.494 3.309 1.367 0.546-0.244 1.113-0.367 1.691-0.367 2.344 0 4.25 1.907 4.25 4.25zM10.646 8.854l0.707-0.707-2.853-2.854-2.854 2.853 0.707 0.707 1.647-1.646v7.793h1v-7.793l1.646 1.647z" /></svg>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+                                            <a href="#" class="dropdown-item">
+                                                <i class="fas fa-play"></i>
+                                                <span>New Video</span>
+                                            </a>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="fas fa-broadcast-tower"></i>
+                                                <span>Go Live</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown notifications-nav-item">
+                                        <a href="#" class="nav-link dropdown-toggle dropdown-nocaret position-relative" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg fill="#333333" width="20" height="20" viewBox="0 0 17 17"><g></g><path d="M15.312 14.125c-0.014-0.013-1.312-1.294-1.312-3.21v-3.292c0-3.101-2.468-5.623-5.5-5.623s-5.5 2.522-5.5 5.623v3.292c0 1.861-1.306 3.203-1.318 3.216l-0.843 0.853h15.357l-0.884-0.859zM3.052 13.984c0.444-0.692 0.948-1.764 0.948-3.069v-3.292c0-2.549 2.019-4.623 4.5-4.623s4.5 2.074 4.5 4.623v3.292c0 1.32 0.495 2.383 0.938 3.069h-10.886zM9 2h-1v-1h1v1zM9 15h1c0 0.827-0.673 1.5-1.5 1.5s-1.5-0.673-1.5-1.5h1c0 0.276 0.225 0.5 0.5 0.5s0.5-0.224 0.5-0.5z" /></svg>
+                                            <span class="color-badge bg-info position-absolute" style="top: 1.3rem; right: .5rem;"></span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+
+                                            <div class="notifications-box">
+
+                                                <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">Today</small>
+
+                                                <ul class="list-group list-group-notifications-2">
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+                                                            <span class="avatar avatar-1 rounded-circle">KB</span>
+                                                            <span class="badge badge-secondary color-badge badge-size-1"></span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <p><a href="#">Keon Boyer</a> sent you a new message.</p>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+                                                            <span class="avatar avatar-1 rounded-circle">RA</span>
+                                                            <span class="badge badge-success color-badge badge-size-1"></span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <p><a href="#">Roger Aniston</a> started following you.</p>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+
+                                                </ul>
+
+                                                <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">Yesterday</small>
+
+                                                <ul class="list-group list-group-notifications-2">
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+									<span class="avatar avatar-1 rounded-circle">
+										<i class="fas fa-comments"></i>
+									</span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <a href="#">You have 43 new comments.</a>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+                                                            <span class="avatar avatar-1 rounded-circle">LG</span>
+                                                            <span class="badge badge-secondary color-badge badge-size-1"></span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <p><a href="#">Leone Gutkowski</a> started following you.</p>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+                                                            <span class="avatar avatar-1 rounded-circle">SR</span>
+                                                            <span class="badge badge-success color-badge badge-size-1"></span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <p><a href="#">Sterling Robel</a> sent you a new message.</p>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+
+                                                </ul>
+
+                                                <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">5 days ago</small>
+
+                                                <ul class="list-group list-group-notifications-2">
+                                                    <li class="list-group-item">
+                                                        <div class="user-avatar">
+									<span class="avatar avatar-1 rounded-circle">
+										<i class="fas fa-shopping-bag"></i>
+									</span>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <a href="#">You have 2 new orders waiting.</a>
+                                                        </div>
+                                                        <div class="timestamp">19:45</div>
+                                                    </li>
+                                                    <li class="list-group-item mt-3 list-group-loader">
+                                                        <a href="#" class="btn btn-ellipsis-loader">
+                                                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="nav-item nav-user-dropdown dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle dropdown-nocaret" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="avatar avatar-1 rounded-circle">AD</span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+                                            <div class="dropdown-header pt-0">
+                                                <small class="text-overflow m-0">Welcome</small>
+                                            </div>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="fas fa-power-off"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+
+                    </div>
+                    <!-- / Header Nav -->
+
+                    <!-- Main Page Content -->
+                    <div class="page-content">
+
+                        						
+						<div class="card card-promotion-wide" style="background-image: url('../../../assets/applications/philipp-pilz-G6liRenKOuQ-unsplash-1200x380.jpg');">
+							<div class="card-overlay" style="background-color: #363679;"></div>
+							<div class="card-body">
+								<h4 class="card-titles text-white">25th James Bond Film</h4>
+								<h5 class="card-title text-white font-weight-600">Not Time To Die</h5>
+								<p class="card-text text-light">Screening starts on April 10 2020</p>
+							</div>
+							<a href="#" class="btn btn-light btn-rounded btn-play btn-square">
+								<i class="fas fa-play"></i>
+							</a>
+						</div>
+
+						<h3 class="list-title">Latest Movies</h3>
+
+						<!-- Latest Movies -->
+						<div class="row">
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-video-3">
+									<div class="card-header" style="background-image: url('../../../assets/misc/movies/A Quiet Place Part II-2020-h300.jpg');">
+										<span class="badge badge-danger">PG-13</span>
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<a href="#" class="card-body">
+										<span class="card-title">A Quiet Place Part II</span>
+										<span class="card-text">
+											2 hours ago
+										</span>
+									</a>
+								</div>
+
+							</div>
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-video-3">
+									<div class="card-header" style="background-image: url('../../../assets/misc/movies/Mulan-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<a href="#" class="card-body">
+										<span class="card-title">Mulan</span>
+										<span class="card-text">
+											4 days ago
+										</span>
+									</a>
+								</div>
+
+							</div>
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-video-3">
+									<div class="card-header" style="background-image: url('../../../assets/misc/movies/The Roads Not Taken-2020-h300.jpg');">
+										<span class="badge badge-primary">New</span>
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<a href="#" class="card-body">
+										<span class="card-title">The Roads Not Taken</span>
+										<span class="card-text">
+											1 week ago
+										</span>
+									</a>
+								</div>
+
+							</div>
+
+						</div><!-- / Latest Movies -->
+
+						<hr class="list-hr">
+						<h3 class="list-title">You Might Also Like...</h3>
+
+						<!-- You Might Also Like... -->
+						<div class="row">
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/A Quiet Place Part II-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/cnn.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">A Quiet Place Part II</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">CNN <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/bloodshot-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/imdb.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">Bloodshot</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">IMDB <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div> 
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Hunt-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Hunt</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Postcard Killings-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Postcard Killings</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/A Quiet Place Part II-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/cnn.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">A Quiet Place Part II</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">CNN <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/bloodshot-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/imdb.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">Bloodshot</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">IMDB <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div> 
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Hunt-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Hunt</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Postcard Killings-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Postcard Killings</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div><!-- / You Might Also Like... -->
+
+						<hr class="list-hr">
+						<h3 class="list-title">Latest posts</h3>
+
+						<!-- Latest posts -->
+						<div class="row">
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-mail">
+									<div class="card-img">
+										<img src="../../../assets/misc/logos/cnn.jpg" class="avatar avatar rounded-circle" alt="">
+									</div>
+									<div class="card-body">
+										<div class="card-header">
+											<div class="header-info">
+												<h6 class="contact-name">CNN News</h6>
+												<h6 class="mail-subject">New Years Ceremony</h6>
+											</div>
+											<small class="mail-datetime">1:05 PM</small>
+										</div>
+										<div class="card-content">
+											<p class="card-text">
+												What payment methods do you accept?
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum fuga velit.
+											</p>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-mail border-success">
+									<div class="card-img">
+										<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+									</div>
+									<div class="card-body">
+										<div class="card-header">
+											<div class="header-info">
+												<h6 class="contact-name">Netflix</h6>
+												<h6 class="mail-subject">Saturday Night Plans</h6>
+											</div>
+											<small class="mail-datetime">1:05 PM</small>
+										</div>
+										<div class="card-content">
+											<p class="card-text">
+												What payment methods do you accept?
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum fuga velit.
+											</p>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4">
+								
+								<div class="card mt-4 card-mail border-warning">
+									<div class="card-img">
+										<img src="../../../assets/misc/logos/imdb.jpg" class="avatar avatar rounded-circle" alt="">
+									</div>
+									<div class="card-body">
+										<div class="card-header">
+											<div class="header-info">
+												<h6 class="contact-name">IMDB</h6>
+												<h6 class="mail-subject">Post Subject</h6>
+											</div>
+											<small class="mail-datetime">1:05 PM</small>
+										</div>
+										<div class="card-content">
+											<p class="card-text">
+												What payment methods do you accept?
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum fuga velit.
+											</p>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div><!-- / Latest posts -->
+
+						<hr class="list-hr">
+						<h3 class="list-title">Breaking News</h3>
+
+						<!-- Breaking News -->
+						<div class="row">
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/A Quiet Place Part II-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/cnn.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">A Quiet Place Part II</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">CNN <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/bloodshot-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/imdb.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">Bloodshot</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">IMDB <i class="fas fa-check-circle"></i></a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div> 
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Hunt-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Hunt</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-md-4 col-lg-3">
+								
+								<div class="card mt-4 card-video-youtube">
+									<div class="card-img" style="background-image: url('../../../assets/misc/movies/The Postcard Killings-2020-h300.jpg');">
+										<span class="badge video-duration-badge">1:24:12</span>
+									</div>
+									<div class="card-body">
+										<a href="#" class="channel-img"> 
+											<img src="../../../assets/misc/logos/netflix.jpg" class="avatar avatar rounded-circle" alt="">
+										</a>
+										<div class="card-content">
+											<div class="card-header">
+												<a href="#" class="card-title">The Postcard Killings</a>
+												<div class="dropdown">
+													<button class="btn dropdown-toggle dropdown-nocaret" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Add to Watch Later</a>
+														<a class="dropdown-item" href="#"><i class="fas fa-list"></i> Add to Queue</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" href="#"><i class="fas fa-flag"></i> Report inappropriate content</a>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="channel-name">Netflix</a>
+											<ul class="video-stats">
+												<li>13K views</li>
+												<li>46 minutes ago</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div><!-- / Breaking News -->
+						
+						<button type="button" class="btn btn-ellipsis-loader is-loading mx-auto mb-0 mt-24" data-toggle="class" data-target="self" data-class="is-loading">
+							<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+						</button>
+
+
+                    </div><!-- / .page-content -->
+                    <!-- Main Page Content -->
+
+                    <!-- Footer -->
+                    <div class="copyright row">
+						<div class="col-md-6 text-left">
+							&copy; Copyright 2019 Exon Admin Dashboard Template.
+						</div>
+						<div class="col-md-6 text-right">
+							Crafted By <a href="#">Ari D</a>.
+						</div>
+					</div><!-- / .copyright -->
+                    <!-- / Footer -->
+
+                </div><!-- / .page-container -->
+
+
+            </main><!-- / .main-content -->
+
+        </div><!-- / .page-wrapper -->
+        <!-- / Wrapper Arround The Page -->
+
+        
+        <script src="../../../js/vendor.js"></script>
+
+        
+        
+
+
+        <script src="../../../layouts/layout-19/js/app.js"></script>
+
+        
+        
+
+
+    </body>
+</html>

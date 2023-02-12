@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){new Quill("#editor",{theme:"snow"}),new Quill("#editor-full",{modules:{toolbar:"#toolbar-container"},theme:"snow"}),new Quill("#editor-inline",{theme:"bubble"})});

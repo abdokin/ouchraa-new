@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$(".tabs-slider .carousel").each(function(){$(this).carousel({interval:!1})}),$(".tabs-slider .nav-link").on("click",function(s){$(this).closest(".nav").find(".nav-link.active").removeClass("active"),$(this).addClass("active"),$(this).closest(".tabs-slider").find(".carousel").carousel($(this).data("slide"))})});

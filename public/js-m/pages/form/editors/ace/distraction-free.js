@@ -1,0 +1,1 @@
+"use strict";ace.require("ace/ext/language_tools");var editor=ace.edit("editor");editor.session.setMode("ace/mode/html"),editor.setTheme("ace/theme/tomorrow"),editor.setOptions({enableBasicAutocompletion:!0,enableSnippets:!0,enableLiveAutocompletion:!1});

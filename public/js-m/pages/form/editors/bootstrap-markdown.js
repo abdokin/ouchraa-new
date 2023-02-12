@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$('[data-toggle="markdown"]').each(function(){var a=$(this);a.markdown({autofocus:!1,savable:!1,iconlibrary:"fa",editable:!!a.data("editable")})})});

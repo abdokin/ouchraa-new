@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$(".chat-box").each(function(){$(this).scrollTop($(this)[0].scrollHeight)})});

@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){tableDragger(document.querySelector("#default-table")),tableDragger(document.querySelector("#table-sort-rows"),{mode:"row",onlyBody:!0}),tableDragger(document.querySelector("#table-sort-thead"),{mode:"row"}),tableDragger(document.querySelector("#table-handle"),{dragHandler:".handle"})});

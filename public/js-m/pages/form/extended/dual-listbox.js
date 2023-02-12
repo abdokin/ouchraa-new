@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$('select[name="duallistbox_demo1[]"]').bootstrapDualListbox(),$('select[name="duallistbox_demo2[]"]').bootstrapDualListbox({nonSelectedListLabel:"Non-selected",selectedListLabel:"Selected",preserveSelectionOnMove:"moved",moveOnSelect:!1})});

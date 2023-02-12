@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title>Exon Admin Dashboard Template</title>
+        <meta name="description" content="Exon Admin Dashboard Template">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/png" href="../../../assets/favicon.png">
+        <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon.png">
+
+        <link rel="stylesheet" href="../../../css/vendor.css">
+
+        <!-- Fontawesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
+        <!-- Dosis & Poppins Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;523;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        
+        
+
+
+        <link rel="stylesheet" href="../../../layouts/layout-16/css/app.css">
+
+        
+        
+    <style type="text/css">
+
+        .page-content
+        {
+            background-color: #fbfbfb;
+        }
+
+    </style>
+
+
+
+        <script type="text/javascript">
+
+            window.ROOT_URL = "../../.."
+
+        </script>
+
+    </head>
+
+    <body>
+
+        
+        
+        <!-- Wrapper Arround The Page -->
+		<div id="app" class="page-wrapper sidebar-open ">
+			<main class="main-content">
+
+				<div class="navigation-wrapper">
+
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-top navbar-expand-lg navbar-dark">
+                        <div class="container">
+                            <button class="navbar-toggler navbar-toggler-css navbar-menu-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar-bottom-collapsible" aria-controls="navbar-bottom-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="line"></span>
+                                <span class="line"></span>
+                                <span class="line"></span>
+                            </button>
+                            <a class="navbar-brand" href="/">
+                                <img src="../../../assets/layouts/logos/logo.png" height="20" alt="">
+                            </a>
+                            <button class="navbar-toggler navbar-toggler-css-reverse navbar-menu-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar-top-collapsible" aria-controls="navbar-top-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="line"></span>
+                                <span class="line"></span>
+                                <span class="line"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbar-top-collapsible">
+                                <ul class="navbar-nav navbar-menu-secondary">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" role="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 3 C 13.253906 3 11 5.253906 11 8 L 11 9 L 6.0625 9 L 6 9.9375 L 5 27.9375 L 4.9375 29 L 27.0625 29 L 27 27.9375 L 26 9.9375 L 25.9375 9 L 21 9 L 21 8 C 21 5.253906 18.746094 3 16 3 Z M 16 5 C 17.65625 5 19 6.34375 19 8 L 19 9 L 13 9 L 13 8 C 13 6.34375 14.34375 5 16 5 Z M 7.9375 11 L 11 11 L 11 14 L 13 14 L 13 11 L 19 11 L 19 14 L 21 14 L 21 11 L 24.0625 11 L 24.9375 27 L 7.0625 27 Z"/></svg>
+                                            Shop
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" role="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 4 C 9.382813 4 4 9.382813 4 16 C 4 22.617188 9.382813 28 16 28 C 22.617188 28 28 22.617188 28 16 C 28 9.382813 22.617188 4 16 4 Z M 16 6 C 16.335938 6 16.671875 6.03125 17 6.0625 L 17 9.09375 C 16.671875 9.046875 16.339844 9 16 9 C 15.660156 9 15.328125 9.046875 15 9.09375 L 15 6.0625 C 15.328125 6.03125 15.664063 6 16 6 Z M 13 6.4375 L 13 9.6875 C 11.546875 10.382813 10.378906 11.546875 9.6875 13 L 6.46875 13 C 7.441406 9.875 9.882813 7.414063 13 6.4375 Z M 19 6.4375 C 22.113281 7.414063 24.585938 9.886719 25.5625 13 L 22.3125 13 C 21.621094 11.546875 20.453125 10.378906 19 9.6875 Z M 16 11 C 18.773438 11 21 13.226563 21 16 C 21 18.773438 18.773438 21 16 21 C 13.226563 21 11 18.773438 11 16 C 11 13.226563 13.226563 11 16 11 Z M 6.0625 15 L 9.0625 15 C 9.015625 15.324219 9 15.664063 9 16 C 9 16.339844 9.046875 16.671875 9.09375 17 L 6.0625 17 C 6.03125 16.671875 6 16.335938 6 16 C 6 15.664063 6.03125 15.328125 6.0625 15 Z M 22.90625 15 L 25.9375 15 C 25.96875 15.328125 26 15.664063 26 16 C 26 16.335938 25.96875 16.671875 25.9375 17 L 22.90625 17 C 22.953125 16.671875 23 16.339844 23 16 C 23 15.660156 22.953125 15.328125 22.90625 15 Z M 6.4375 19 L 9.6875 19 C 10.378906 20.453125 11.546875 21.621094 13 22.3125 L 13 25.5625 C 9.886719 24.585938 7.414063 22.113281 6.4375 19 Z M 22.3125 19 L 25.5625 19 C 24.585938 22.113281 22.113281 24.585938 19 25.5625 L 19 22.3125 C 20.453125 21.621094 21.621094 20.453125 22.3125 19 Z M 15 22.90625 C 15.328125 22.953125 15.660156 23 16 23 C 16.339844 23 16.671875 22.953125 17 22.90625 L 17 25.9375 C 16.671875 25.96875 16.335938 26 16 26 C 15.664063 26 15.328125 25.96875 15 25.9375 Z"/></svg>
+                                            Support
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <form class="navbar-search">
+                                    <div class="input-group input-group-merged input-group-squared">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-light btn-merge btn-icon" type="button">
+                                                <svg id="lnr-magnifier" viewBox="0 0 1024 1024"><path class="path1" d="M966.070 981.101l-304.302-331.965c68.573-71.754 106.232-165.549 106.232-265.136 0-102.57-39.942-199-112.47-271.53s-168.96-112.47-271.53-112.47-199 39.942-271.53 112.47-112.47 168.96-112.47 271.53 39.942 199.002 112.47 271.53 168.96 112.47 271.53 112.47c88.362 0 172.152-29.667 240.043-84.248l304.285 331.947c5.050 5.507 11.954 8.301 18.878 8.301 6.179 0 12.378-2.226 17.293-6.728 10.421-9.555 11.126-25.749 1.571-36.171zM51.2 384c0-183.506 149.294-332.8 332.8-332.8s332.8 149.294 332.8 332.8-149.294 332.8-332.8 332.8-332.8-149.294-332.8-332.8z"></path></svg>
+                                            </button>
+                                        </div>
+                                        <input type="search" class="form-control" placeholder="Search...">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- / Navigation -->
+
+                    <!-- Horizontal Menu -->
+                    <nav class="navbar navbar-bottom navbar-expand-lg navbar-dark">
+                        <div class="container">
+
+                            <div class="collapse navbar-collapse" id="navbar-bottom-collapsible">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a href="../../../" class="nav-link active">
+                                            <i class="fas fa-user-cog"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 5 C 12.1 5 9 8.1 9 12 C 9 14.4375 10.209961 16.561523 12.070312 17.8125 C 8.5100119 19.34733 6 22.893578 6 27 L 8 27 C 8 22.6 11.6 19 16 19 C 19.9 19 23 15.9 23 12 C 23 8.1 19.9 5 16 5 z M 16 7 C 18.8 7 21 9.2 21 12 C 21 14.8 18.8 17 16 17 C 13.2 17 11 14.8 11 12 C 11 9.2 13.2 7 16 7 z M 24.099609 18 L 24.099609 20.099609 C 23.499609 20.199609 22.900391 20.500781 22.400391 20.800781 L 20.900391 19.300781 L 19.5 20.699219 L 21 22.199219 C 20.6 22.699219 20.400781 23.3 20.300781 24 L 18 24 L 18 26 L 20.099609 26 C 20.199609 26.6 20.500781 27.200781 20.800781 27.800781 L 19.300781 29.300781 L 20.699219 30.699219 L 22.199219 29.199219 C 22.699219 29.499219 23.300391 29.800391 23.900391 29.900391 L 23.900391 32 L 25.900391 32 L 25.900391 29.900391 C 26.500391 29.800391 27.099609 29.499219 27.599609 29.199219 L 29.099609 30.699219 L 30.5 29.300781 L 29 27.800781 C 29.4 27.300781 29.599219 26.7 29.699219 26 L 32 26 L 32 24 L 29.900391 24 C 29.800391 23.4 29.499219 22.799219 29.199219 22.199219 L 30.699219 20.699219 L 29.300781 19.300781 L 27.800781 20.800781 C 27.300781 20.500781 26.699609 20.199609 26.099609 20.099609 L 26.099609 18 L 24.099609 18 z M 25 22 C 26.7 22 28 23.3 28 25 C 28 26.7 26.7 28 25 28 C 23.3 28 22 26.7 22 25 C 22 23.3 23.3 22 25 22 z M 25 24 C 24.875 24 24.75 24.03125 24.632812 24.085938 C 24.515625 24.140625 24.40625 24.21875 24.3125 24.3125 C 24.21875 24.40625 24.140625 24.515625 24.085938 24.632812 C 24.03125 24.75 24 24.875 24 25 C 24 25.375 24.28125 25.75 24.632812 25.914062 C 24.75 25.96875 24.875 26 25 26 C 25.5 26 26 25.5 26 25 C 26 24.5 25.5 24 25 24 z"/></svg>
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-box"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 8.5 5 L 8.1875 5.40625 L 5 9.65625 L 5 27 L 27 27 L 27 9.65625 L 23.8125 5.40625 L 23.5 5 Z M 9.5 7 L 15 7 L 15 9 L 8 9 Z M 17 7 L 22.5 7 L 24 9 L 17 9 Z M 7 11 L 25 11 L 25 25 L 7 25 Z M 12.8125 13 C 12.261719 13.050781 11.855469 13.542969 11.90625 14.09375 C 11.957031 14.644531 12.449219 15.050781 13 15 L 19 15 C 19.359375 15.003906 19.695313 14.816406 19.878906 14.503906 C 20.058594 14.191406 20.058594 13.808594 19.878906 13.496094 C 19.695313 13.183594 19.359375 12.996094 19 13 L 13 13 C 12.96875 13 12.9375 13 12.90625 13 C 12.875 13 12.84375 13 12.8125 13 Z"/></svg>
+                                            <span>Layouts</span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-arrow dropdown-menu-end">
+                                            <li>
+                                                <a href="#" class="dropdown-item">Default</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Layout 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Layout 2</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Layout 3</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Layout 4</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-calculator"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 6 3 L 6 29 L 26 29 L 26 3 Z M 8 5 L 24 5 L 24 27 L 8 27 Z M 10 7 L 10 13 L 22 13 L 22 7 Z M 12 9 L 20 9 L 20 11 L 12 11 Z M 11 15 L 11 17 L 13 17 L 13 15 Z M 15 15 L 15 17 L 17 17 L 17 15 Z M 19 15 L 19 17 L 21 17 L 21 15 Z M 11 19 L 11 21 L 13 21 L 13 19 Z M 15 19 L 15 21 L 17 21 L 17 19 Z M 19 19 L 19 21 L 21 21 L 21 19 Z M 11 23 L 11 25 L 13 25 L 13 23 Z M 15 23 L 15 25 L 17 25 L 17 23 Z M 19 23 L 19 25 L 21 25 L 21 23 Z"/></svg>
+                                            <span>Applications</span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-arrow dropdown-menu-end">
+                                            <li>
+                                                <div class="dropdown-item dropdown">
+                                                    <a class="dropdown-toggle dropdown-nocaret" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Chat</span>
+                                                        <i class="chevron">
+                                                            <svg fill="#ffffff" viewBox="0 0 1024 1024"><path class="path1" d="M256 1024c-6.552 0-13.102-2.499-18.101-7.499-9.998-9.997-9.998-26.206 0-36.203l442.698-442.698-442.698-442.699c-9.998-9.997-9.998-26.206 0-36.203s26.206-9.998 36.203 0l460.8 460.8c9.998 9.997 9.998 26.206 0 36.203l-460.8 460.8c-5 5-11.55 7.499-18.102 7.499z"></path></svg>
+                                                        </i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Chat 1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Chat 2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Chat 3</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item dropdown">
+                                                    <a class="dropdown-toggle dropdown-nocaret" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Mailbox</span>
+                                                        <i class="chevron">
+                                                            <svg fill="#ffffff" viewBox="0 0 1024 1024"><path class="path1" d="M256 1024c-6.552 0-13.102-2.499-18.101-7.499-9.998-9.997-9.998-26.206 0-36.203l442.698-442.698-442.698-442.699c-9.998-9.997-9.998-26.206 0-36.203s26.206-9.998 36.203 0l460.8 460.8c9.998 9.997 9.998 26.206 0 36.203l-460.8 460.8c-5 5-11.55 7.499-18.102 7.499z"></path></svg>
+                                                        </i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Mailbox</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Mail View</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item dropdown">
+                                                    <a class="dropdown-toggle dropdown-nocaret" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Users</span>
+                                                        <i class="chevron">
+                                                            <svg fill="#ffffff" viewBox="0 0 1024 1024"><path class="path1" d="M256 1024c-6.552 0-13.102-2.499-18.101-7.499-9.998-9.997-9.998-26.206 0-36.203l442.698-442.698-442.698-442.699c-9.998-9.997-9.998-26.206 0-36.203s26.206-9.998 36.203 0l460.8 460.8c9.998 9.997 9.998 26.206 0 36.203l-460.8 460.8c-5 5-11.55 7.499-18.102 7.499z"></path></svg>
+                                                        </i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">List 1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">List 2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">List 3</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">List 4</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">List 5</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item dropdown">
+                                                    <a class="dropdown-toggle dropdown-nocaret" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Social Media</span>
+                                                        <i class="chevron">
+                                                            <svg fill="#ffffff" viewBox="0 0 1024 1024"><path class="path1" d="M256 1024c-6.552 0-13.102-2.499-18.101-7.499-9.998-9.997-9.998-26.206 0-36.203l442.698-442.698-442.698-442.699c-9.998-9.997-9.998-26.206 0-36.203s26.206-9.998 36.203 0l460.8 460.8c9.998 9.997 9.998 26.206 0 36.203l-460.8 460.8c-5 5-11.55 7.499-18.102 7.499z"></path></svg>
+                                                        </i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 3</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="dropdown-item dropdown">
+                                                    <a class="dropdown-toggle dropdown-nocaret" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span>Blog</span>
+                                                        <i class="chevron">
+                                                            <svg fill="#ffffff" viewBox="0 0 1024 1024"><path class="path1" d="M256 1024c-6.552 0-13.102-2.499-18.101-7.499-9.998-9.997-9.998-26.206 0-36.203l442.698-442.698-442.698-442.699c-9.998-9.997-9.998-26.206 0-36.203s26.206-9.998 36.203 0l460.8 460.8c9.998 9.997 9.998 26.206 0 36.203l-460.8 460.8c-5 5-11.55 7.499-18.102 7.499z"></path></svg>
+                                                        </i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 1</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 2</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="dropdown-item">Posts 3</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">File Manager</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Calendar</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Subscribers</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Contacts</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Task Manager</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="dropdown-item">Kanban</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown mega-dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-cube"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 4.40625 L 15.59375 4.59375 L 5.59375 9.09375 L 5 9.34375 L 5 22.03125 L 5.5 22.3125 L 15.5 27.875 L 16 28.15625 L 16.5 27.875 L 26.5 22.3125 L 27 22.03125 L 27 9.34375 L 26.40625 9.09375 L 16.40625 4.59375 Z M 16 6.59375 L 23.6875 10.03125 L 16 13.875 L 8.3125 10.03125 Z M 7 11.625 L 15 15.625 L 15 25.28125 L 7 20.84375 Z M 25 11.625 L 25 20.84375 L 17 25.28125 L 17 15.625 Z"/></svg>
+                                            <span>UI Elements</span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-start">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">1st Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Alerts</a>
+                                                        <a href="#" class="dropdown-item">Badge</a>
+                                                        <a href="#" class="dropdown-item">Breadcrumb</a>
+                                                        <a href="#" class="dropdown-item">Buttons</a>
+                                                        <a href="#" class="dropdown-item">Button Groups</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">2nd Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Card</a>
+                                                        <a href="#" class="dropdown-item">Carousel</a>
+                                                        <a href="#" class="dropdown-item">Collapse</a>
+                                                        <a href="#" class="dropdown-item">Dropdowns</a>
+                                                        <a href="#" class="dropdown-item">Images</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">3rd Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">List group</a>
+                                                        <a href="#" class="dropdown-item">Media object</a>
+                                                        <a href="#" class="dropdown-item">Modal</a>
+                                                        <a href="#" class="dropdown-item">Navs</a>
+                                                        <a href="#" class="dropdown-item">Pagination</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">4th Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Popovers</a>
+                                                        <a href="#" class="dropdown-item">Progress</a>
+                                                        <a href="#" class="dropdown-item">Spinners</a>
+                                                        <a href="#" class="dropdown-item">Tabs</a>
+                                                        <a href="#" class="dropdown-item">Toasts</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown mega-dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-cubes"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 16 4 L 15.625 4.15625 L 9.625 6.5625 L 9 6.8125 L 9 13.53125 L 3.59375 15.875 L 3 16.15625 L 3 24.21875 L 3.5 24.53125 L 9.5 27.875 L 9.96875 28.125 L 10.4375 27.90625 L 16 25.125 L 21.5625 27.90625 L 22.03125 28.125 L 22.5 27.875 L 28.5 24.53125 L 29 24.21875 L 29 16.15625 L 28.40625 15.875 L 23 13.53125 L 23 6.8125 L 22.375 6.5625 L 16.375 4.15625 Z M 16 6.1875 L 19.28125 7.46875 L 16 8.75 L 12.71875 7.46875 Z M 11 8.9375 L 15 10.46875 L 15 15.34375 L 11 13.5625 Z M 21 8.9375 L 21 13.5625 L 17 15.34375 L 17 10.46875 Z M 10 15.3125 L 13.625 16.90625 L 10 18.6875 L 6.375 16.875 Z M 22 15.3125 L 25.625 16.875 L 22 18.6875 L 18.375 16.90625 L 19.5 16.40625 Z M 5 18.40625 L 9 20.40625 L 9 25.3125 L 5 23.0625 Z M 27 18.40625 L 27 23.0625 L 23 25.3125 L 23 20.40625 Z M 15 18.46875 L 15 23.375 L 11 25.375 L 11 20.40625 Z M 17 18.46875 L 21 20.40625 L 21 25.375 L 17 23.375 Z"/></svg>
+                                            <span>Components</span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">1st Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Cards</a>
+                                                        <a href="#" class="dropdown-item">Lists</a>
+                                                        <a href="#" class="dropdown-item">Ribbons</a>
+                                                        <a href="#" class="dropdown-item">Menus</a>
+                                                        <a href="#" class="dropdown-item">Timeline</a>
+                                                        <a href="#" class="dropdown-item">Ripple Effect</a>
+                                                        <a href="#" class="dropdown-item">Off Canvas</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">2nd Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Hover Effects</a>
+                                                        <a href="#" class="dropdown-item">Social Buttons</a>
+                                                        <a href="#" class="dropdown-item">Loading Buttons</a>
+                                                        <a href="#" class="dropdown-item">Progress</a>
+                                                        <a href="#" class="dropdown-item">NProgress</a>
+                                                        <a href="#" class="dropdown-item">SVG Loaders</a>
+                                                        <a href="#" class="dropdown-item">Bootstrap Notify</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">3rd Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Clipboard</a>
+                                                        <a href="#" class="dropdown-item">JSTree</a>
+                                                        <a href="#" class="dropdown-item">Bootstrap Treeview</a>
+                                                        <a href="#" class="dropdown-item">Slick Carousel</a>
+                                                        <a href="#" class="dropdown-item">Tiny Slider</a>
+                                                        <a href="#" class="dropdown-item">SortableJS</a>
+                                                        <a href="#" class="dropdown-item">Nestable2</a>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3 my-lg-3">
+                                                        <div class="dropdown-header mb-2">
+                                                            <h6 class="text-overflow m-0">4th Category</h6>
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">Sweet Alert</a>
+                                                        <a href="#" class="dropdown-item">Toastr</a>
+                                                        <a href="#" class="dropdown-item">ProgressbarJS</a>
+                                                        <a href="#" class="dropdown-item">Raty</a>
+                                                        <a href="#" class="dropdown-item">Slinky</a>
+                                                        <a href="#" class="dropdown-item">Lightbox 2</a>
+                                                        <a href="#" class="dropdown-item">Tooltips</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- / Horizontal Menu -->
+
+                    <!-- Header Navigation Toolbar -->
+                    <nav class="navbar navbar-toolbar navbar-expand-lg navbar-dark">
+                        <div class="container">
+                            <ul class="navbar-nav navbar-menu-primary">
+                                <li class="nav-item dropdown language-dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle dropdown-nocaret" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../../../assets/layouts/flags/us.svg" alt="">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+                                        <a href="#" class="dropdown-item">
+                                            <img src="../../../assets/layouts/flags/us.svg" alt=""> English
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <img src="../../../assets/layouts/flags/fr.svg" alt=""> French
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <img src="../../../assets/layouts/flags/it.svg" alt=""> Italian
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown notifications-nav-item">
+                                    <a href="#" class="nav-link dropdown-toggle dropdown-nocaret position-relative" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg fill="#ffffff" width="22" height="22" id="lnr-alarm" viewBox="0 0 1024 1024"><path class="path1" d="M860.171 773.15c-58.576-44-92.171-111.194-92.171-184.35v-153.6c0-128.661-86.733-237.442-204.798-270.954l-0.002-36.246c0-42.347-34.451-76.8-76.8-76.8-42.347 0-76.8 34.453-76.8 76.8v36.245c-118.067 33.512-204.8 142.294-204.8 270.955v153.6c0 73.157-33.595 140.349-92.171 184.35-8.808 6.616-12.395 18.125-8.907 28.573 3.486 10.448 13.267 17.496 24.283 17.496h232.982c-1.709 8.384-2.587 16.955-2.587 25.581 0 70.579 57.421 128 128 128s128-57.421 128-128c0-8.626-0.878-17.197-2.584-25.581h232.981c11.016 0 20.795-7.046 24.283-17.496s-0.101-21.957-8.909-28.573zM460.8 128c0-14.115 11.485-25.6 25.6-25.6s25.6 11.485 25.6 25.6v26.774c-8.435-0.763-16.97-1.176-25.6-1.176s-17.166 0.413-25.6 1.176v-26.774zM563.2 844.8c0 42.347-34.453 76.8-76.8 76.8s-76.8-34.453-76.8-76.8c0-8.76 1.515-17.411 4.394-25.581h144.813c2.878 8.168 4.394 16.821 4.394 25.581zM191.571 768.019c13.075-15.826 24.437-33.051 33.744-51.27 20.362-39.858 30.685-82.906 30.685-127.949v-153.6c0-127.043 103.357-230.4 230.4-230.4s230.4 103.357 230.4 230.4v153.6c0 45.043 10.323 88.091 30.685 127.949 9.307 18.219 20.669 35.445 33.744 51.27h-589.658z"></path></svg>
+                                        <span class="color-badge bg-light position-absolute" style="top: 1.3rem; right: .7rem;"></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+
+                                        <div class="notifications-box">
+
+                                            <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">Today</small>
+
+                                            <ul class="list-group list-group-notifications-2">
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">KB</span>
+                                                        <span class="badge badge-secondary color-badge badge-size-1"></span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <p><a href="#">Keon Boyer</a> sent you a new message.</p>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">RA</span>
+                                                        <span class="badge badge-success color-badge badge-size-1"></span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <p><a href="#">Roger Aniston</a> started following you.</p>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+
+                                            </ul>
+
+                                            <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">Yesterday</small>
+
+                                            <ul class="list-group list-group-notifications-2">
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">
+                                                            <i class="fas fa-comments"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <a href="#">You have 43 new comments.</a>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">LG</span>
+                                                        <span class="badge badge-secondary color-badge badge-size-1"></span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <p><a href="#">Leone Gutkowski</a> started following you.</p>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">SR</span>
+                                                        <span class="badge badge-success color-badge badge-size-1"></span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <p><a href="#">Sterling Robel</a> sent you a new message.</p>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+
+                                            </ul>
+
+                                            <small class="d-block mt-3" style="margin-left: 30px; font-weight: 500; color: #999;">5 days ago</small>
+
+                                            <ul class="list-group list-group-notifications-2">
+                                                <li class="list-group-item">
+                                                    <div class="user-avatar">
+                                                        <span class="avatar avatar-1 rounded-circle">
+                                                            <i class="fas fa-shopping-bag"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <a href="#">You have 2 new orders waiting.</a>
+                                                    </div>
+                                                    <div class="timestamp">19:45</div>
+                                                </li>
+                                                <li class="list-group-item mt-3 list-group-loader">
+                                                    <a href="#" class="btn btn-ellipsis-loader">
+                                                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                                <li class="nav-item nav-user-dropdown dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle dropdown-nocaret" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Ari Davar
+                                        <img src="../../../assets/avatars/1.jpg" class="avatar avatar-1 rounded-circle" alt="Avatar image">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-sm dropdown-menu-start">
+                                        <div class="dropdown-header pt-0">
+                                            <small class="text-overflow m-0">Welcome</small>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>Profile</span>
+                                        </a>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="fas fa-power-off"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <!-- / Header Navigation Toolbar -->
+
+				</div>
+
+				<div class="page-container container">
+
+                    <!-- Main Page Content -->
+					<div class="page-content">
+
+                        
+
+
+					</div>
+                    <!-- / Main Page Content -->
+
+                    <!-- Footer -->
+                    <div class="copyright row">
+						<div class="col-md-6 text-left">
+							&copy; Copyright 2019 Exon Admin Dashboard Template.
+						</div>
+						<div class="col-md-6 text-right">
+							Crafted By <a href="#">Ari D</a>.
+						</div>
+					</div><!-- / .copyright -->
+                    <!-- / Footer -->
+
+				</div>
+			</main>
+		</div>
+        <!-- / Wrapper Arround The Page -->
+
+        
+        <script src="../../../js/vendor.js"></script>
+
+        
+        
+
+
+        <script src="../../../layouts/layout-16/js/app.js"></script>
+
+        
+        
+
+
+    </body>
+</html>

@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$("#summernote").summernote({height:150}),$("#summernote-air").summernote({height:150,airMode:!0})});

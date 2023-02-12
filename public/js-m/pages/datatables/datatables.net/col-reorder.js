@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$("#datatable-reorder").DataTable({colReorder:!0})});

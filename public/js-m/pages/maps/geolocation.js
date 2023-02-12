@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){var e=new GMaps({el:"#map-geolocation",lat:-12.043333,lng:-77.028333});GMaps.geolocate({success:function(o){e.setCenter(o.coords.latitude,o.coords.longitude)},error:function(o){alert("Geolocation failed: "+o.message)},not_supported:function(){alert("Your browser does not support geolocation")},always:function(){alert("Done!")}})});

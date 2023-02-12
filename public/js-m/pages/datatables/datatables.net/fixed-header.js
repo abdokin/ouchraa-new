@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$("#datatable-fixed").DataTable({paging:!1,fixedHeader:{footer:!0,headerOffset:60}})});
