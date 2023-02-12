@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->foreignId('UpdatedBy')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('Type')->references('id')->on('shipment_provider_types');
             $table->boolean('Status')->default(false);
-            $table->string('Logo')->default(""); //TODO:make logo link
+            $table->string('Logo')->nullable()->default(""); //TODO:make logo link
             $table->foreignId('TemplateID')->references('id')->on('templates')->cascadeOnDelete();
             $table->boolean('AutoTN')->default(false);
             $table->timestamps();

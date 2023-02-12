@@ -341,15 +341,20 @@ export default function Navbar({ props, pageName }) {
                                     <i className="fas fa-exchange-alt"></i>
                                     <span>Switch Hubs</span>
                                 </Link>
-
+                                <Link
+                                    className={`${
+                                        route().current("config.*") && "active"
+                                    } dropdown-item`}
+                                    href={route("config.hubs")}
+                                >
+                                    <i className="fas fa-cog"></i>
+                                    <span>Configuration</span>
+                                </Link>
                                 <a href="/switch-hubs" className="dropdown-item">
                                     <i className="fas fa-shipping-fast"></i>
                                     <span>Drivers Management</span>
                                 </a>
-                                <a href="/switch-hubs" className="dropdown-item">
-                                    <i className="fas fa-cog"></i>
-                                    <span>Configuration</span>
-                                </a>
+                             
                                 <a href="/switch-hubs" className="dropdown-item">
                                     <i className="fas fa-code"></i>
                                     <span>API</span>

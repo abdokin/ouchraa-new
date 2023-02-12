@@ -9,11 +9,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ShipmentProvider extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'ShipmentProviderName',
+        'ShipmentProviderAddress',
+        'ShipmentProviderCity',
+        'ShipmentProviderPhone',
+        'Type',
+        'Logo',
+        'TemplateID',
+        'AutoTN'
+    ];
     public function owner()
     {
-        return $this->belongsTo(User::class, 'CreatedBy')->select('id', 'UserName','ShipperPhone');
+        return $this->belongsTo(User::class, 'CreatedBy')->select('id', 'UserName', 'ShipperPhone');
     }
-    
+
     /**
      * Get the city that owns the ShipmentProvider
      *
@@ -23,7 +33,7 @@ class ShipmentProvider extends Model
     {
         return $this->belongsTo(City::class, 'ShipmentProviderCity');
     }
-    public function type(): BelongsTo
+    public function hubtype(): BelongsTo
     {
         return $this->belongsTo(ShipmentProviderType::class, 'Type');
     }

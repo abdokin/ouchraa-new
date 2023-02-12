@@ -28,7 +28,7 @@ function UploadModal({ close, isEmployee }) {
                 },
             });
         } else {
-            post(route("packages.uploads"), {
+            post(route("packages.upload-post"), {
                 data,
                 onSuccess: () => {
                     // setTimeout(() => close)

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\City;
 use App\Models\ShipmentProvider;
+use App\Models\ShipmentProviderType;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\WorkFlow;
@@ -49,9 +50,10 @@ class HandleInertiaRequests extends Middleware
                 'current_hub' => $request->user()->currentShipmentProvider ?? null,
             ],
             'statuses' => Status::all(),
-            'cities' => City::all(),
-            'hubs' => ShipmentProvider::all(),
+            'cities' => City::where('status',true)->get(),
+            'hubs' => ShipmentProvider::where('Status',true)->get(),
             'workflows' => WorkFlow::all(),
+            'hubsType' => ShipmentProviderType::all(),
             'flash' => [
                 'type' => $request->session()->get('type'),
                 'message' => $request->session()->get('message'),

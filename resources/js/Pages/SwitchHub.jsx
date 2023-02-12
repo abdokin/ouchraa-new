@@ -78,12 +78,12 @@ export default function SwitchHub(props) {
                                                     </h6>
                                                     <small>
                                                         <i className="fas fa-user"></i>{" "}
-                                                        {it.owner.UserName}
+                                                        {it?.owner?.UserName}
                                                     </small>
                                                     <br />
                                                     <small>
                                                         <i className="fas fa-phone-alt"></i>{" "}
-                                                        {it.owner.ShipperPhone}
+                                                        {it?.owner?.ShipperPhone}
                                                     </small>
                                                 </div>
                                                 <div className="col col-price">

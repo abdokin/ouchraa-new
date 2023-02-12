@@ -3,6 +3,7 @@
 // use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HubController;
@@ -41,13 +42,17 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('uploads-package', [UploadPackageController::class, 'index'])->name('packages.uploads');
-    Route::post('uploads-package', [UploadPackageController::class, 'upload'])->name('packages.uploads');
+    Route::post('uploads-package-post', [UploadPackageController::class, 'upload'])->name('packages.upload-post');
     Route::post('uploads-package-em', [UploadPackageController::class, 'uploadEm'])->name('packages.upload-em');
 
 
     Route::get('profile', ProfileController::class)->name('profile');
     //switchHub 
     Route::get('switch-hub', [HubController::class, 'index'])->name('switchHub');
+
+
+
+
     Route::post('switch-hub/{shipmentProvider}', [HubController::class, 'switchHub'])->name('hub.switch');
 
 
@@ -63,6 +68,19 @@ Route::middleware('auth')->group(function () {
     // dropp
     Route::post('/pick-up/drop-off/{package}', [PickUpController::class, 'dropped'])->name('package.dropped');
     Route::post('/pick-up/not-accepted/{package}', [PickUpController::class, 'notAccepted'])->name('package.notAccepted');
+    // configuration
+    Route::get('/config/hubs', [ConfigurationController::class, 'hubs'])->name('config.hubs');
+    Route::get('/config/cities', [ConfigurationController::class, 'cities'])->name('config.cities');
+    Route::get('/config/prices', [ConfigurationController::class, 'prices'])->name('config.prices');
+    Route::get('/config/sizes', [ConfigurationController::class, 'sizes'])->name('config.sizes');
+    Route::post('/config/enable/{shipmentProvider}', [HubController::class, 'enable'])->name('config.hub.enable');
+    Route::post('/config/enable-all', [HubController::class, 'enableAll'])->name('config.hub.enableAll');
+
+    Route::post('/config/create-hub', [HubController::class, 'store'])->name('config.hub.create');
+    Route::post('/config/update/{shipmentProvider}', [HubController::class, 'update'])->name('config.hub.update');
+    Route::post('/config/autoTn/{shipmentProvider}', [HubController::class, 'autoTn'])->name('config.hub.autoTn');
+
+
 
 
 });

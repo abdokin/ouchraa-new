@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import { DateRange } from "react-date-range";
 import { Link, usePage } from "@inertiajs/inertia-react";
-import { useLocalStorage } from "react-use";
+import { useClickAway, useLocalStorage } from "react-use";
 
 export default function Filters({ workflow }) {
     const { hubs, statuses, workflows, cities } = usePage().props;
@@ -102,7 +102,10 @@ export default function Filters({ workflow }) {
                         <div className="form-group col-md-3">
                             <Select
                                 options={cities.map((it) => {
-                                    return { value: it.id, label: it?.localite };
+                                    return {
+                                        value: it.id,
+                                        label: it?.localite,
+                                    };
                                 })}
                                 label={'Select a recipient cities"'}
                                 onChange={setCustomerCity}
@@ -214,9 +217,12 @@ export default function Filters({ workflow }) {
     );
 }
 
-function DateRangePicker({ label, id, state, setState }) {
+export function DateRangePicker({ label, id, state, setState }) {
     const [openCalander, setOpenCalander] = useState(false);
-
+    const ref = useRef(null);
+    useClickAway(ref, () => {
+        setOpenCalander(false);
+    });
     return (
         <>
             <label htmlFor={id}>{label}</label>
@@ -244,6 +250,7 @@ function DateRangePicker({ label, id, state, setState }) {
             </div>
             {openCalander && (
                 <div
+                    ref={ref}
                     className={""}
                     style={{
                         position: "absolute",
@@ -276,7 +283,23 @@ function DateRangePicker({ label, id, state, setState }) {
     );
 }
 
-const Select = ({ label, value, options, onChange }) => {
+export const SelectNotMulti = ({ label, value, options, onChange }) => {
+    return (
+        <div>
+            <label>{label}</label>
+            <MultiSelect
+                MultiSelect={true}
+                // defaultIsOpen={true}
+                options={options}
+                value={value}
+                onChange={onChange}
+                labelledBy={label}
+            />
+        </div>
+    );
+};
+
+export const Select = ({ label, value, options, onChange }) => {
     return (
         <div>
             <label>{label}</label>
