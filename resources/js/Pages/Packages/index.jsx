@@ -275,7 +275,7 @@ export default function Index(props) {
             formatter: CustomerFormater,
         },
         {
-            dataField: "customer_city",
+            dataField: "cutomer_city",
             text: "Customer City",
             formatter: CityFormater,
             sort: true,

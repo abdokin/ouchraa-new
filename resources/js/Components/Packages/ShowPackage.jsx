@@ -313,7 +313,7 @@ export function ShowPackage({ packageCurrent }) {
                                         <dt className="col-sm-5">City</dt>
                                         <dd className="col-sm-7">
                                             {
-                                                packageCurrent.customer_city
+                                                packageCurrent.cutomer_city
                                                     .localite
                                             }
                                         </dd>

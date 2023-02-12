@@ -29,11 +29,11 @@ return new class extends Migration {
             $table->float('Discount')->default(0);
             $table->foreignId('DriverID')->references('id')->on('users');
             $table->foreignId('PickupDeliveryOption')->references('id')->on('work_flows');
-            $table->unsignedBigInteger('PickupDeliveryPrice')->default(1);
+            $table->decimal('PickupDeliveryPrice')->default(1);
             // options
             $table->foreignId('ReverseDeliveryOption')->references('id')->on('work_flows');
-            $table->unsignedBigInteger('ReverseDeliveryPrice')->default(1);
-            $table->unsignedBigInteger('DeclaredValue')->default(0);
+            $table->decimal('ReverseDeliveryPrice')->default(1);
+            $table->decimal('DeclaredValue')->default(0);
             $table->boolean('ProofDistributedObject')->default(false);
             $table->boolean('Fragile')->default(false);
             $table->string('ApiKey')->nullable();

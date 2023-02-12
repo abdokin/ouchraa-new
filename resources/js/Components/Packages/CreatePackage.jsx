@@ -211,7 +211,7 @@ export function CreatePackageModal({
                                     {cities.map((it) => {
                                         return (
                                             <option value={it.id}>
-                                                {it.localite}
+                                                {it?.localite}
                                             </option>
                                         );
                                     })}
@@ -323,7 +323,9 @@ export function CreatePackageModal({
                             <option></option>
                             {cities.map((it) => {
                                 return (
-                                    <option value={it.id}>{it.localite}</option>
+                                    <option value={it.id}>
+                                        {it?.localite}
+                                    </option>
                                 );
                             })}
                         </Form.Select>
@@ -392,11 +394,13 @@ export function CreatePackageModal({
                         >
                             <option></option>
                             {shippingMethods.map((it) => {
-                                return (
-                                    <option value={it.id}>
-                                        {it.WorkflowName}
-                                    </option>
-                                );
+                                if (it.WorkflowName.startsWith("Forward")) {
+                                    return (
+                                        <option value={it.id}>
+                                            {it.WorkflowName}
+                                        </option>
+                                    );
+                                }
                             })}
                         </Form.Select>
                         {errors && (

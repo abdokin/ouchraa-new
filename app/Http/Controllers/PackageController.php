@@ -61,6 +61,30 @@ class PackageController extends Controller
                     AllowedFilter::exact('workFlow', 'workFlow.id'),
                     AllowedFilter::exact('LastMile', 'lastMile.id'),
                     AllowedFilter::exact('FirstMile', 'FirstMile.id'),
+                    AllowedFilter::exact('customer_city', 'cutomerCity.id'),
+                    AllowedFilter::callback('created_in', function (Builder $query, $value) {
+                        $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                    }),
+                    AllowedFilter::callback('updated_in', function (Builder $query, $value) {
+                        $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                    }), // 'created_at','updated_at'
+                ])
+
+                ->latest()
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
+                ->paginate()
+                ->appends(request()->query());
+
+            //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
+        } else {
+            $packages = QueryBuilder::for (Package::class)
+                ->allowedFilters([
+                    AllowedFilter::exact('status', 'status.id'),
+                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
+                    AllowedFilter::exact('workFlow', 'workFlow.id'),
+                    AllowedFilter::exact('LastMile', 'lastMile.id'),
+                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
                     AllowedFilter::callback('created_in', function (Builder $query, $value) {
                         $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
                     }),
@@ -72,25 +96,6 @@ class PackageController extends Controller
                 ->latest()
                 ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
                 ->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
-                ->paginate()
-                ->appends(request()->query());
-
-            //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
-        } else {
-            $packages = QueryBuilder::for (Package::class)
-                ->latest()
-                ->where('ShipperID', auth()->user()->id)
-                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
-                ->allowedFilters([
-                    AllowedFilter::exact('status', 'status.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    AllowedFilter::exact('workFlow', 'workFlow.id'),
-                    AllowedFilter::exact('LastMile', 'lastMile.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    'created_at',
-                    'updated_at'
-                ])
                 ->paginate()
                 ->appends(request()->query());
         }
@@ -456,7 +461,7 @@ class PackageController extends Controller
             'lastMileHub' => $package->LastMile->ShipmentProviderName,
             'customerName' => $package->CustomerName,
             'customerAddress' => $package->CustomerAddress,
-            'customerCity' => $package->customerCity->localite,
+            'cutomerCity' => $package->cutomerCity->localite,
             'customerPhone' => $package->CustomerPhone,
             'amountToCollect' => $package->AmountToCollect,
         ];
@@ -500,7 +505,7 @@ class PackageController extends Controller
                     'lastMileHub' => $package->LastMile->ShipmentProviderName,
                     'customerName' => $package->CustomerName,
                     'customerAddress' => $package->CustomerAddress,
-                    'customerCity' => $package->customerCity->localite,
+                    'cutomerCity' => $package->cutomerCity->localite,
                     'customerPhone' => $package->CustomerPhone,
                     'amountToCollect' => $package->AmountToCollect,
                 ];

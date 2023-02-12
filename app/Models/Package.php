@@ -4,12 +4,10 @@ namespace App\Models;
 
 use App\Rules\UniqueTrackingNumber;
 use Database\Seeders\PlTrackingNumberSeeder;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Carbon;
 use PhpParser\Error;
 
 class Package extends Model
@@ -89,7 +87,7 @@ class Package extends Model
     {
         return $this->belongsTo(User::class, 'ShipperID');
     }
-    public function customerCity(): BelongsTo
+    public function cutomerCity(): BelongsTo
     {
         return $this->belongsTo(City::class, 'CustomerCity')->with('shipmentProvider');
     }
@@ -118,14 +116,13 @@ class Package extends Model
     {
         return $this->belongsTo(Reason::class, 'ReasonID');
     }
-  
     public static function generateTrackingNumber(Package $package)
     {
         // TODO get the configuration from table
         $user = User::find($package->CreatedBy);
         $unique = new UniqueTrackingNumber($user);
         $prefix = $user->TrackingPrefix;
-        $autoTn = $package->customerCity->shipmentProvider->AutoTN;
+        $autoTn = $package->cutomerCity->shipmentProvider->AutoTN;
         if ($autoTn) {
             $prefix_ = $prefix ? $prefix : "MC";
             $tracking_numer = null;

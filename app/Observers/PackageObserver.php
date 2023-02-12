@@ -15,14 +15,21 @@ class PackageObserver
 
     public static function calculateShippingFee(Package $package)
     {
-        // $user = auth()->user();
-        $user = User::find($package->CreatedBy);
+        // $user = auth()->user(); 1+1+20 +
+        // whereRaw('WeightTo = (select max(`WeightTo`) from weights)')
+        $user = User::find($package->ShipperID ?? -1);
+        if (is_null($user)) {
+
+            $user = User::find($package->CreatedBy);
+        }
         // get the pick up method 
         $pickupprice = $user->PickupDeliveryPrice; // 1
         // weight
         $weight = 0;
         $weightControl = Weight::where('Status', true)->where('WeightFrom', '<=', $package->Weight)->where('WeightTo', '>=', $package->Weight)->first();
-
+        if (is_null($weightControl)) {
+            $weightControl = Weight:: whereRaw('WeightTo = (select max(`WeightTo`) from weights)')->first();
+        }
         if ($weightControl) {
             if ($package->ShippingMethod == 3) {
 
@@ -142,7 +149,7 @@ class PackageObserver
             'StatusID' => $package->StatusID,
             'DriverID' => $package->DriverID ?? null,
         ]);
-        if(!$history){
+        if (!$history) {
             throw new \ErrorException("Cant create History");
         }
     }

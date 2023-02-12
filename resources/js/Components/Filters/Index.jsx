@@ -10,7 +10,7 @@ export default function Filters({ workflow }) {
     const [workFlows, setWorkFlows] = useLocalStorage("index_work_flow", []);
 
     const [status, setStatus] = useLocalStorage("status_filter", []);
-    const [customer_city, setCustomerCity] = useLocalStorage(
+    const [cutomer_city, setCustomerCity] = useLocalStorage(
         "index_customer_city_filter",
         []
     );
@@ -102,11 +102,11 @@ export default function Filters({ workflow }) {
                         <div className="form-group col-md-3">
                             <Select
                                 options={cities.map((it) => {
-                                    return { value: it.id, label: it.localite };
+                                    return { value: it.id, label: it?.localite };
                                 })}
                                 label={'Select a recipient cities"'}
                                 onChange={setCustomerCity}
-                                value={customer_city}
+                                value={cutomer_city}
                             />
                         </div>
                         <div className="form-group col-md-3">
@@ -173,6 +173,12 @@ export default function Filters({ workflow }) {
                         }&${
                             lastMile.length > 0
                                 ? `filter[LastMile]=${lastMile.map(
+                                      (it) => it.value
+                                  )}`
+                                : ""
+                        }&${
+                            cutomer_city.length > 0
+                                ? `filter[cutomer_city]=${cutomer_city.map(
                                       (it) => it.value
                                   )}`
                                 : ""
