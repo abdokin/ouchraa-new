@@ -19,10 +19,10 @@ class TPLTrackingNumberSeeder extends Seeder
     public function run()
     {
         $MOD_3LPTRack = array(
-            array('id' => '1', 'TrackingNumber' => 'ED111111111', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
-            array('id' => '2', 'TrackingNumber' => 'ED111111112', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
-            array('id' => '3', 'TrackingNumber' => 'ED111111113', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
-            array('id' => '4', 'TrackingNumber' => 'ED111111114', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
+            array('TrackingNumber' => 'ED111111111', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
+            array('TrackingNumber' => 'ED111111112', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
+            array('TrackingNumber' => 'ED111111113', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
+            array('TrackingNumber' => 'ED111111114', 'ShipmentProvider' => 2, 'Status' => false, 'PackageID' => ''),
 
         );
         collect($MOD_3LPTRack)->each(function ($m) {

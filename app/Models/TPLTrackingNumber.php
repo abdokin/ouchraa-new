@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class TPLTrackingNumber extends Model
 {
     use HasFactory;
-    protected $fillable =[
-        'TrackingNumber','ShipmentProvider','Status','PackageID'
+    protected $fillable = [
+        'TrackingNumber',
+        'ShipmentProvider',
+        'Status',
+        'PackageID'
     ];
+    public function hub()
+    {
+        return $this->belongsTo(ShipmentProvider::class, 'ShipmentProvider');
+    }
 }

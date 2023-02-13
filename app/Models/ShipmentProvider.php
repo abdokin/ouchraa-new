@@ -23,6 +23,10 @@ class ShipmentProvider extends Model
     {
         return $this->belongsTo(User::class, 'CreatedBy')->select('id', 'UserName', 'ShipperPhone');
     }
+    public function tplTracking()
+    {
+        return $this->hasMany(TPLTrackingNumber::class,'ShipmentProvider')->where('Status', false)->select('TrackingNumber');
+    }
 
     /**
      * Get the city that owns the ShipmentProvider

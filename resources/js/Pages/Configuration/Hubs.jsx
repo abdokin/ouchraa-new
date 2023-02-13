@@ -109,6 +109,7 @@ const Table = ({
         );
     };
     const hubsId = hubs.map((it) => it.id);
+    console.log("hubs", hubs);
     return (
         <div className="row">
             <div className="col-sm-12 min-vh-100">
@@ -371,7 +372,10 @@ const Table = ({
                                                 Random
                                             </>
                                         ) : (
-                                            <>Count</>
+                                            <span>
+                                                {it?.tpl_tracking_count} of
+                                                Tracking Numbers Left
+                                            </span>
                                         )}
                                     </td>
                                     <td>
@@ -596,16 +600,6 @@ const Head = ({ openCreate, selected }) => {
                         <span className="ladda-label">Export</span>
                         <span className="ladda-spinner"></span>
                     </button>
-                    <a
-                        // href="javascript:void(0)"
-                        href="#"
-                        id="ExportGenerator"
-                        style={{ display: "none" }}
-                    >
-                        <button type="button" id="Export">
-                            Export
-                        </button>
-                    </a>
                 </div>
             </div>
         </div>
@@ -794,6 +788,7 @@ function CreateModal({ handleClose }) {
                 </button>
                 <button
                     type="button"
+                    onClick={() => handleClose()}
                     className="btn btn-secondary"
                     data-dismiss="modal"
                 >
@@ -997,6 +992,7 @@ function EditModal({ handleClose, row }) {
                     Confirm
                 </button>
                 <button
+                    onClick={() => handleClose()}
                     type="button"
                     className="btn btn-secondary"
                     data-dismiss="modal"
@@ -1022,6 +1018,12 @@ function UploadModal({ close, id }) {
     function submit(e) {
         e.preventDefault();
         setData("file", file);
+        post(route("config.hub.upload"), {
+            data,
+            onSuccess: () => {
+                close();
+            },
+        });
         console.log("data", data);
     }
     const fileTypes = ["csv"];
@@ -1089,13 +1091,13 @@ function UploadModal({ close, id }) {
             </div>
 
             <div className="modal-footer">
-                <button
+                <a
                     id="UploadTemplate"
-                    type="button"
+                    href="/storage/templates/TPL_Upload.csv"
                     className="btn btn-primary float-left"
                 >
                     <i className="fas fa-download"></i> Template
-                </button>
+                </a>
                 <button
                     type="button"
                     className="btn btn-light ml-auto"

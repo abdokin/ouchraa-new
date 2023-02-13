@@ -46,12 +46,12 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
-                'isEmployee' =>$request->user() ?  $request->user()->isEmployee() : null,
+                'isEmployee' => $request->user() ? $request->user()->isEmployee() : null,
                 'current_hub' => $request->user()->currentShipmentProvider ?? null,
             ],
             'statuses' => Status::all(),
-            'cities' => City::where('status',true)->get(),
-            'hubs' => ShipmentProvider::where('Status',true)->get(),
+            'cities' => City::where('status', true)->with('shipmentProvider', 'creator', 'updater')->get(),
+            'hubs' => ShipmentProvider::where('Status', true)->get(),
             'workflows' => WorkFlow::all(),
             'hubsType' => ShipmentProviderType::all(),
             'flash' => [

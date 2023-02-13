@@ -561,6 +561,7 @@ export function CreatePackageModal({
                 </button>
                 <button
                     type="button"
+                    onClick={() => handleClose()}
                     className="btn btn-secondary"
                     data-dismiss="modal"
                 >

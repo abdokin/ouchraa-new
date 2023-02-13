@@ -28,7 +28,7 @@ class PackageObserver
         $weight = 0;
         $weightControl = Weight::where('Status', true)->where('WeightFrom', '<=', $package->Weight)->where('WeightTo', '>=', $package->Weight)->first();
         if (is_null($weightControl)) {
-            $weightControl = Weight:: whereRaw('WeightTo = (select max(`WeightTo`) from weights)')->first();
+            $weightControl = Weight::orderBy('WeightTo', 'desc')->first();
         }
         if ($weightControl) {
             if ($package->ShippingMethod == 3) {

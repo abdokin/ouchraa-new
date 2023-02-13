@@ -20,9 +20,9 @@ return new class extends Migration {
             $table->decimal('FailedDelivery');
             $table->decimal('PickupStation');
             $table->decimal('CustomerReturn');
-            $table->foreignId('UpdatedBy')->references('id')->on('users');
+            $table->foreignId('UpdatedBy')->nullable()->references('id')->on('users');
             $table->boolean('Status')->default(true);
-            $table->foreignId('updated_by')->nullable()->references('id')->on('users');
+            $table->foreignId('CreatedBy')->nullable()->references('id')->on('users');
 
             $table->timestamps();
         });

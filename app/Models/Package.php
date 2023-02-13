@@ -134,7 +134,7 @@ class Package extends Model
             // } while ($unique->passes('',$tracking_numer));
             return $tracking_numer;
         } else {
-            $track = TPLTrackingNumber::where('Status', false)->first();
+            $track = TPLTrackingNumber::where('ShipmentProvider', $package->ShipmentProviderID)->where('Status', false)->first();
             if (!$track) {
                 throw new Error('Cant Get Tracking Number');
             }

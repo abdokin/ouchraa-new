@@ -15,11 +15,20 @@ class City extends Model
         'localite',
         'province',
         'region_postal',
+        'LastMileHub',
         'status'
     ];
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'createdBy');
+    }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updatedBy');
+    }
     public function shipmentProvider()
     {
-        return $this->belongsTo(ShipmentProvider::class, 'LastMileHub');
+        return $this->belongsTo(ShipmentProvider::class, 'LastMileHub')->with('hubtype','city');
     }
 
 }

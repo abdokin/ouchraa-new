@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Models\Price;
 use App\Models\ShipmentProvider;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -19,40 +21,69 @@ class ConfigurationController extends Controller
     public function hubs()
     {
         // try {
-            $hubs = QueryBuilder::for (ShipmentProvider::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('hubtype', 'hubtype.id'),
-                    AllowedFilter::exact('status','Status'),
-                    AllowedFilter::callback('created_in', function (Builder $query, $value) {
-                        $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }),
-                    AllowedFilter::callback('updated_in', function (Builder $query, $value) {
-                        $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }),
-                ])
-                ->with('hubtype', 'owner')
-                ->orderBy('id', 'DESC')
-                ->get();
-            // $hubs = ShipmentProvider::latest()->orderBy('id', 'DESC')->with('type','owner')->get();
-            return inertia('Configuration/Hubs', [
-                'hubs' => $hubs
-            ]);
-        // } catch (\Throwable $th) {
-        //     // throw new Error()
-
-        //     return inertia('Configuration/Hubs', [
-        //         'hubs' => []
-        //     ]);
-        // }
+        $hubs = QueryBuilder::for (ShipmentProvider::class)
+            ->allowedFilters([
+                AllowedFilter::exact('hubtype', 'hubtype.id'),
+                AllowedFilter::exact('status', 'Status'),
+                AllowedFilter::callback('created_in', function (Builder $query, $value) {
+                    $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+                AllowedFilter::callback('updated_in', function (Builder $query, $value) {
+                    $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+            ])
+            ->with('hubtype', 'owner')
+            ->withCount('tplTracking')
+            ->orderBy('id', 'DESC')
+            ->get();
+        return inertia('Configuration/Hubs', [
+            'hubs' => $hubs
+        ]);
 
     }
     public function cities()
     {
-        return inertia('Configuration/Cities');
+        // $cities = 
+        $cities = QueryBuilder::for (City::class)
+            ->allowedFilters([
+                // AllowedFilter::exact('hubtype', 'hubtype.id'),
+                AllowedFilter::exact('status', 'status'),
+                AllowedFilter::callback('created_in', function (Builder $query, $value) {
+                    $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+                AllowedFilter::callback('updated_in', function (Builder $query, $value) {
+                    $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+            ])
+            ->with('shipmentProvider', 'creator', 'updater')
+            // ->withCount('tplTracking')
+            ->orderBy('id', 'DESC')
+            ->get();
+        return inertia('Configuration/Cities', [
+            'cities' => $cities,
+
+        ]);
     }
     public function prices()
     {
-        return inertia('Configuration/Prices');
+        $prices = QueryBuilder::for(Price::class)
+            ->allowedFilters([
+                // AllowedFilter::exact('hubtype', 'hubtype.id'),
+                AllowedFilter::exact('status', 'status'),
+                AllowedFilter::callback('created_in', function (Builder $query, $value) {
+                    $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+                AllowedFilter::callback('updated_in', function (Builder $query, $value) {
+                    $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
+                }),
+            ])
+            ->with('firstMile','lastMile', 'updator')
+            // ->withCount('tplTracking')
+            ->orderBy('id', 'DESC')
+            ->get();
+        return inertia('Configuration/Prices',[
+            'prices' => $prices
+        ]);
     }
     public function sizes()
     {

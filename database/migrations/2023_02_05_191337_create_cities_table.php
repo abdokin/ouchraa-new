@@ -19,6 +19,9 @@ return new class extends Migration {
             $table->string('localite');
             $table->string('province');
             $table->string('region_postal');
+            $table->foreignId('createdBy')->nullable()->references('id')->on('users');
+            $table->foreignId('updatedBy')->nullable()->references('id')->on('users');
+
             $table->boolean('status')->default(false);
             $table->foreignId('LastMileHub')->nullable()->references('id')->on('shipment_providers');
             $table->timestamps();

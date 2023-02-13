@@ -3,6 +3,7 @@
 // use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\HubController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PickUpController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TplController;
 use App\Http\Controllers\UploadPackageController;
 use App\Http\Controllers\UserController;
 use App\Models\ShipmentProvider;
@@ -69,20 +71,37 @@ Route::middleware('auth')->group(function () {
     Route::post('/pick-up/drop-off/{package}', [PickUpController::class, 'dropped'])->name('package.dropped');
     Route::post('/pick-up/not-accepted/{package}', [PickUpController::class, 'notAccepted'])->name('package.notAccepted');
     // configuration
-    Route::get('/config/hubs', [ConfigurationController::class, 'hubs'])->name('config.hubs');
-    Route::get('/config/cities', [ConfigurationController::class, 'cities'])->name('config.cities');
     Route::get('/config/prices', [ConfigurationController::class, 'prices'])->name('config.prices');
     Route::get('/config/sizes', [ConfigurationController::class, 'sizes'])->name('config.sizes');
-    Route::post('/config/enable/{shipmentProvider}', [HubController::class, 'enable'])->name('config.hub.enable');
-    Route::post('/config/enable-all', [HubController::class, 'enableAll'])->name('config.hub.enableAll');
 
+
+
+    Route::get('/config/hubs', [ConfigurationController::class, 'hubs'])->name('config.hubs');
+    Route::post('/config/enable-all', [HubController::class, 'enableAll'])->name('config.hub.enableAll');
+    Route::post('/config/enable/{shipmentProvider}', [HubController::class, 'enable'])->name('config.hub.enable');
     Route::post('/config/create-hub', [HubController::class, 'store'])->name('config.hub.create');
     Route::post('/config/update/{shipmentProvider}', [HubController::class, 'update'])->name('config.hub.update');
     Route::post('/config/autoTn/{shipmentProvider}', [HubController::class, 'autoTn'])->name('config.hub.autoTn');
 
 
 
+    // Route::post('/config/update/{shipmentProvider}', [HubController::class, 'update'])->name('config.hub.update');
 
+    Route::get('/config/cities', [ConfigurationController::class, 'cities'])->name('config.cities');
+    Route::post('/config/city/enable/{city}', [CityController::class, 'enable'])->name('config.cities.enable');
+    Route::post('/config/city/enable-all', [CityController::class, 'enableAll'])->name('config.cities.enableAll');
+    Route::post('/config/city/store', [CityController::class, 'store'])->name('config.cities.store');
+    Route::post('/config/city/update/{city}', [CityController::class, 'update'])->name('config.cities.update');
+    Route::post('/config/city/delete/{city}', [CityController::class, 'delete'])->name('config.cities.delete');
+
+
+
+
+
+
+
+    // TPL UPLOAD 
+    Route::post('/config/hub-tpl-upload', [TplController::class, 'upload'])->name('config.hub.upload');
 });
 
 Route::middleware('guest')->group(function () {
