@@ -639,10 +639,7 @@ function Table({
 }
 
 function Head({ handleShow, workflow, rowSelected }) {
-    const [filtersOpen, setFiltersOpen] = useLocalStorage(
-        "index_filter",
-        false
-    );
+    const [filtersOpen, setFiltersOpen] = useState(false);
     const readyToShips = (ids) => {
         // console.log(id);
         Inertia.post(route("package.readyToShips"), {

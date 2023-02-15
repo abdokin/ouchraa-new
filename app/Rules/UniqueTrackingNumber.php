@@ -29,11 +29,11 @@ class UniqueTrackingNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-        $Reference = Package::where('ShipperID', $this->user->id)->where('TrackingNumber', $value)->select('TrackingNumber')->first();
+        $Reference = Package::where('FistMileHub', $this->user->CurrentShipmentProvider)->where('TrackingNumber', $value)->select('TrackingNumber')->first();
         if (is_null($Reference)) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
 
     }
 
