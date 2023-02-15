@@ -1,3 +1,4 @@
+import { Inertia } from "@inertiajs/inertia";
 import { useForm } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
 import Base from "../Layouts/Base";
@@ -22,7 +23,9 @@ export default function SwitchHub(props) {
             {
                 data,
                 onSuccess: () => {
-                    reset(), close();
+                    reset();
+                    // Inertia.replace(route('packages.index'));
+                    // window.history.back()
                 },
             }
         );
@@ -30,7 +33,7 @@ export default function SwitchHub(props) {
 
     return (
         <>
-            <div classNameName="container">
+            <div className="container">
                 <form
                     onSubmit={onSubmit}
                     className="panel panel-light"
@@ -48,7 +51,10 @@ export default function SwitchHub(props) {
                         <div className="form-row mt-3">
                             {props.hubs.map((it) => {
                                 return (
-                                    <div className="form-group col-md-6" key={it.id}>
+                                    <div
+                                        className="form-group col-md-6"
+                                        key={it.id}
+                                    >
                                         <div className="card card-selectable selectable-primary-gradient mx-3 mb-4">
                                             <input
                                                 type="radio"
@@ -83,7 +89,10 @@ export default function SwitchHub(props) {
                                                     <br />
                                                     <small>
                                                         <i className="fas fa-phone-alt"></i>{" "}
-                                                        {it?.owner?.ShipperPhone}
+                                                        {
+                                                            it?.owner
+                                                                ?.ShipperPhone
+                                                        }
                                                     </small>
                                                 </div>
                                                 <div className="col col-price">

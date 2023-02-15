@@ -1,10 +1,10 @@
 import { useForm } from "@inertiajs/inertia-react";
 import Form from "react-bootstrap/Form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Switch from "react-switchery-component";
+import toast, { Toaster } from "react-hot-toast";
 
 export function CreatePackageModal({
-    handleClose,
     shippers,
     cities,
     shippingMethods,
@@ -33,6 +33,8 @@ export function CreatePackageModal({
         Fragile: false,
         ProductDescription: "",
         CheckPackage: false,
+        ShipperCin: undefined,
+        CustomerCin: undefined,
     });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
@@ -48,7 +50,14 @@ export function CreatePackageModal({
             post(route("package.storeEm"), {
                 data,
                 onSuccess: () => {
+                    console.log("here");
+
                     reset(), close();
+                },
+                onFinish: () => {
+                    if (Object.keys(errors).length > 0) {
+                        toast["error"](errors[Object.keys(errors)[0]]);
+                    }
                 },
             });
             return;
@@ -58,11 +67,20 @@ export function CreatePackageModal({
             onSuccess: () => {
                 reset(), close();
             },
+            onFinish: () => {
+                if (Object.keys(errors).length > 0) {
+                    console.log("here");
+                    toast["error"](errors[Object.keys(errors)[0]]);
+                }
+            },
         });
     };
+
     return (
         <form onSubmit={onSubmit}>
+            <Toaster position="top-center" duration="4000" />
             {/* <div className="modal-content"> */}
+            {JSON.stringify(Object.keys(errors).length)}
             <div className="modal-header">
                 <h5 className="modal-title">Create</h5>
                 <button
@@ -240,6 +258,24 @@ export function CreatePackageModal({
                                     </div>
                                 )}
                             </div>
+                            <div className="col-md-4 mt-3">
+                                <label htmlFor="ShipperCin">
+                                    Shipper Cin: <i></i>
+                                </label>
+                                <input
+                                    id="ShipperCin"
+                                    value={data.ShipperCin}
+                                    onChange={onChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="K*****"
+                                />
+                                {errors && (
+                                    <div className="text-danger mt-1">
+                                        {errors.ShipperCin}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </>
                 )}
@@ -350,6 +386,24 @@ export function CreatePackageModal({
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.RecipientEmail}
+                            </div>
+                        )}
+                    </div>
+                    <div className="col-md-4 mt-3">
+                        <label htmlFor="CustomerCin">
+                            Recipient Cin: <i></i>
+                        </label>
+                        <input
+                            id="CustomerCin"
+                            value={data.CustomerCin}
+                            onChange={onChange}
+                            type="text"
+                            className="form-control"
+                            placeholder="K****"
+                        />
+                        {errors && (
+                            <div className="text-danger mt-1">
+                                {errors.CustomerCin}
                             </div>
                         )}
                     </div>
@@ -561,7 +615,7 @@ export function CreatePackageModal({
                 </button>
                 <button
                     type="button"
-                    onClick={() => handleClose()}
+                    onClick={() => close()}
                     className="btn btn-secondary"
                     data-dismiss="modal"
                 >

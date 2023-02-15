@@ -7,7 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
     <!-- Dosis & Poppins Fonts -->
@@ -22,10 +26,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link
         href="{{ asset('/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-                                            <link href="/css/nucleo-svg.css" rel="stylesheet') }}" />
-    <!-- CSS Files -->
-    {{-- <link id="pagestyle" href="/css/argon-dashboard.css?v=2.0.0" rel="stylesheet" /> --}}
-    {{-- <script src="{{ asset('/css/app.css') }}" defer></script> --}}
+                                                                            <link href="/css/nucleo-svg.css" rel="stylesheet') }}" />
     <link rel="stylesheet" href="{{ asset('css-m/vendor.css') }}">
 
     <link rel="stylesheet" href="{{ asset('vendor/ari_d/js-list-manager/js-list-manager.css') }}">
@@ -34,11 +35,6 @@
     <link rel="stylesheet" href="{{ asset('/css-m/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('layouts/layout-3/css/app.css') }}">
 
-    {{-- bootstrap select --}}
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
@@ -46,14 +42,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"
         integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
     @routes
 
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <style>
-        .item-renderer > input{
-             display: none;
-         }
-        li > .selected {
+        .item-renderer>input {
+            display: none;
+        }
+
+        li>.selected {
             background: #0a53be !important;
             color: white;
         }
@@ -62,6 +62,9 @@
 
 <body class="g-sidenav-show   bg-gray-100">
     @inertia
+    {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
     <!--   Core JS Files   -->
     <script src="/js/core/popper.min.js"></script>
     {{-- <script src="/js/core/bootstrap.min.js"></script> --}}
@@ -110,7 +113,6 @@
 
 
     <script>
-
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)

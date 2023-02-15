@@ -98,7 +98,6 @@ const Table = ({
         );
     };
     const AutoTn = (id, value) => {
-        console.log("value", value);
         Inertia.post(
             route("config.hub.autoTn", {
                 shipmentProvider: id,
@@ -109,7 +108,6 @@ const Table = ({
         );
     };
     const hubsId = hubs.map((it) => it.id);
-    console.log("hubs", hubs);
     return (
         <div className="row">
             <div className="col-sm-12 min-vh-100">

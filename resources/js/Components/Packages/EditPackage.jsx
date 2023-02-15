@@ -5,7 +5,6 @@ import Switch from "react-switchery-component";
 
 export function EditPackageModale({
     packageCurrent,
-    handleClose,
     shippers,
     cities,
     shippingMethods,
@@ -46,6 +45,8 @@ export function EditPackageModale({
         Weight: packageCurrent.Weight,
         ProductDescription: packageCurrent.ProductDescription,
         CheckPackage: packageCurrent.CheckPackage,
+        CustomerCin: packageCurrent.CustomerCin,
+        ShipperCin: packageCurrent.ShipperCin,
     });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
@@ -81,7 +82,6 @@ export function EditPackageModale({
             }
         );
     };
-    console.log(errors);
 
     return (
         <form onSubmit={onSubmit}>
@@ -93,7 +93,7 @@ export function EditPackageModale({
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={() => handleClose()}
+                    onClick={() => close()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -263,6 +263,24 @@ export function EditPackageModale({
                                     </div>
                                 )}
                             </div>
+                            <div className="col-md-4 mt-3">
+                                <label htmlFor="ShipperCin">
+                                    Shipper Cin: <i></i>
+                                </label>
+                                <input
+                                    id="ShipperCin"
+                                    value={data.ShipperCin}
+                                    onChange={onChange}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="K*****"
+                                />
+                                {errors && (
+                                    <div className="text-danger mt-1">
+                                        {errors.ShipperCin}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </>
                 )}
@@ -371,6 +389,24 @@ export function EditPackageModale({
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.CustomerEmail}
+                            </div>
+                        )}
+                    </div>
+                    <div className="col-md-4 mt-3">
+                        <label htmlFor="CustomerCin">
+                            Recipient Cin: <i></i>
+                        </label>
+                        <input
+                            id="CustomerCin"
+                            value={data.CustomerCin}
+                            onChange={onChange}
+                            type="text"
+                            className="form-control"
+                            placeholder="K****"
+                        />
+                        {errors && (
+                            <div className="text-danger mt-1">
+                                {errors.CustomerCin}
                             </div>
                         )}
                     </div>
@@ -581,7 +617,7 @@ export function EditPackageModale({
                 </button>
                 <button
                     type="button"
-                    onClick={() => handleClose()}
+                    onClick={() => close()}
                     className="btn btn-secondary"
                     data-dismiss="modal"
                 >

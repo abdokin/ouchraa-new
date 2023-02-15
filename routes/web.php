@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
 
     Route::apiResource('packages', PackageController::class);
     Route::post('packages/em', [PackageController::class, 'storeEm'])->name('package.storeEm');
+    Route::post('packages', [PackageController::class, 'indexWithFilers'])->name('packages.filters');
+    Route::post('packages/store', [PackageController::class, 'store'])->name('packages.store');
+
+
     Route::post('packages/ready-to-ship/{package}', [PackageController::class, 'readyToship'])->name('package.readyToShip');
     Route::post('packages/ready-to-ships', [PackageController::class, 'readyToships'])->name('package.readyToShips');
     Route::post('packages/cancel/{package}', [PackageController::class, 'cancel'])->name('package.cancel');

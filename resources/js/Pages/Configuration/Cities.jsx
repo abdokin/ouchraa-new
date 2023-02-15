@@ -44,18 +44,7 @@ export default function Cities(props) {
                     handleClose={() => setEdit(false)}
                 />
             </Modal>
-            {/*
 
-            <Modal
-                show={upload}
-                onHide={() => setUpload(false)}
-                // backdrop="static"
-                // keyboard={false}
-                size="md"
-            >
-                <UploadModal id={currentRow} close={() => setUpload(false)} />
-            </Modal>
-    */}
             <Table
                 cities={props.cities}
                 openUpload={(row) => {
@@ -117,6 +106,7 @@ const Table = ({
                 <Choice
                     close={() => setShow(false)}
                     message={"Delete this City"}
+                    icon={<i id="modal-icon" className="fas fa-trash-alt"></i>}
                     action={() => Delete(currentID)}
                 />
             </Modal>
@@ -384,8 +374,8 @@ const Table = ({
                                         <button
                                             id="Delete"
                                             onClick={() => {
-                                                setShow(true)
-                                                setCurrentID(it.id)
+                                                setShow(true);
+                                                setCurrentID(it.id);
                                             }}
                                             data-city="421"
                                             type="button"
@@ -1083,13 +1073,11 @@ function UploadModal({ close, id }) {
     );
 }
 
-function Choice({ message,action, close }) {
+export function Choice({ message, action, close, icon }) {
     return (
         <>
             <div className="modal-body">
-                <div className="icon-box">
-                    <i id="modal-icon" className="fas fa-trash-alt"></i>
-                </div>
+                <div className="icon-box">{icon}</div>
                 <h4 className="modal-title text-center">Are you sure?</h4>
                 <p id="modal-message" className="text-center mt-3 text-center">
                     Do you really confirm to {message}? This process cannot be

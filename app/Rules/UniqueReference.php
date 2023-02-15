@@ -27,11 +27,12 @@ class UniqueReference implements ImplicitRule
      */
     public function passes($attribute, $value)
     {
+       
         $Reference = DB::table('packages')->where('ShipperID', $this->user->id)->where('Reference', $value)->select('Reference')->first();
-        if ($Reference) {
-            return false;
+        if (is_null($Reference)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**

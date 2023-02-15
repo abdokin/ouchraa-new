@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateHubRequest;
 use App\Models\ShipmentProvider;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class HubController extends Controller
 {
@@ -108,7 +109,7 @@ class HubController extends Controller
         $user->CurrentShipmentProvider = $shipmentProvider->id;
         $user->update();
         // return 
-        return back()->with([
+        return to_route('packages.index')->with([
             'type' => 'success',
             'message' => 'Current Hub has been changed',
         ]);

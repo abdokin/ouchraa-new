@@ -13,6 +13,7 @@ use App\Models\Package;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\WorkFlow;
+use App\Rules\UniqueReference;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -29,75 +30,127 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PackageController extends Controller
 {
-    public function changePageSize(Request $request)
+
+    public function indexWithFilers(Request $request)
     {
-        $validated = $request->validate([
-            'pageSize' => 'required|min:0|numeric|max:100'
-        ]);
-        // dd($this->pageSize);
-        $user = User::find(auth()->id());
-        $user->page_size = $validated['pageSize'];
-        $user->update();
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Page Changed',
+        $data = json_decode($request->getContent());
+        // dd(json_decode($request->getContent())->filter);
+
+        if (!$data->filter) {
+            // 
+        }
+        $filter = $data->filter;
+        // dd($data->filter && isset($filter->status) && !empty($filter->status));
+        // dd($data->filter && isset($filter->workFlow) && !empty($filter->status));
+        // dd($data->filter && isset($filter->customerCity)  && !empty($filter->customerCity));
+
+        $isEmployee = auth()->user()->isEmployee();
+        $packages = null;
+        $cities = City::where('status', true)->get();
+        // dd($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end);
+        $shippers = [];
+        if ($isEmployee) {
+            $shippers = Role::where('slug', 'shipper')->first()->users;
+            $packages = Package::
+                when($data->filter && isset($filter->status) && !empty($filter->status), function ($q) use ($filter) {
+                    return $q->whereIn('StatusID', $filter->status);
+
+                })
+                ->when($data->filter && isset($filter->workFlow) && !empty($filter->workFlow), function ($q) use ($filter) {
+                    return $q->whereIn('WorkflowID', $filter->workFlow);
+
+                })
+                ->when($data->filter && isset($filter->customerCity) && !empty($filter->customerCity), function ($q) use ($filter) {
+                    return $q->whereIn('CustomerCity', $filter->customerCity);
+
+                })
+                ->when($data->filter && isset($filter->firstMile) && !empty($filter->firstMile), function ($q) use ($filter) {
+                    return $q->whereIn('FistMileHub', $filter->firstMile);
+
+                })
+                ->when($data->filter && isset($filter->lastMile) && !empty($filter->lastMile), function ($q) use ($filter) {
+                    return $q->whereIn('LastMileHub', $filter->lastMile);
+
+                })
+                ->when($data->filter && isset($filter->created_in) && $filter->created_in->start && $filter->created_in->end, function ($q) use ($filter) {
+                    return $q->whereBetween('created_at', [Carbon::parse($filter->created_in->start), Carbon::parse($filter->created_in->end)]);
+
+                })
+                ->when($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end, function ($q) use ($filter) {
+                    return $q->whereBetween('updated_at', [Carbon::parse($filter->updated_in->start), Carbon::parse($filter->updated_in->end)]);
+
+                })
+                ->latest()
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+                ->paginate();
+
+            //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
+        } else {
+            $packages = Package::
+                when($data->filter && isset($filter->status) && !empty($filter->status), function ($q) use ($filter) {
+                    return $q->whereIn('StatusID', $filter->status);
+
+                })
+                ->when($data->filter && isset($filter->workFlow) && !empty($filter->workFlow), function ($q) use ($filter) {
+                    return $q->whereIn('WorkflowID', $filter->workFlow);
+
+                })
+                ->when($data->filter && isset($filter->customerCity) && !empty($filter->customerCity), function ($q) use ($filter) {
+                    return $q->whereIn('CustomerCity', $filter->customerCity);
+
+                })
+                ->when($data->filter && isset($filter->firstMile) && !empty($filter->firstMile), function ($q) use ($filter) {
+                    return $q->whereIn('FistMileHub', $filter->firstMile);
+
+                })
+                ->when($data->filter && isset($filter->lastMile) && !empty($filter->lastMile), function ($q) use ($filter) {
+                    return $q->whereIn('LastMileHub', $filter->lastMile);
+
+                })
+                ->when($data->filter && isset($filter->created_in) && $filter->created_in->start && $filter->created_in->end, function ($q) use ($filter) {
+                    return $q->whereBetween('created_at', [Carbon::parse($filter->created_in->start), Carbon::parse($filter->created_in->end)]);
+
+                })
+                ->when($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end, function ($q) use ($filter) {
+                    return $q->whereBetween('updated_at', [Carbon::parse($filter->updated_in->start), Carbon::parse($filter->updated_in->end)]);
+
+                })
+
+                ->latest()
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+                ->paginate()
+                ->appends(request()->query());
+        }
+        $shippingMethods = WorkFlow::all();
+        return inertia('Packages', [
+            'packages' => $packages,
+            'shippers' => $shippers,
+            'cities' => $cities,
+            'shippingMethods' => $shippingMethods,
+            'isShipper' => !$isEmployee
         ]);
     }
     public function index()
     {
         $isEmployee = auth()->user()->isEmployee();
         $packages = null;
-
-
         $cities = City::where('status', true)->get();
         $shippers = [];
         if ($isEmployee) {
             $shippers = Role::where('slug', 'shipper')->first()->users;
-            $packages = QueryBuilder::for (Package::class)
-
-                ->allowedFilters([
-                    AllowedFilter::exact('status', 'status.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    AllowedFilter::exact('workFlow', 'workFlow.id'),
-                    AllowedFilter::exact('LastMile', 'lastMile.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    AllowedFilter::exact('customer_city', 'cutomerCity.id'),
-                    AllowedFilter::callback('created_in', function (Builder $query, $value) {
-                        $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }),
-                    AllowedFilter::callback('updated_in', function (Builder $query, $value) {
-                        $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }), // 'created_at','updated_at'
-                ])
-
-                ->latest()
+            $packages = Package::latest()
                 ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
-                ->paginate()
-                ->appends(request()->query());
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+                ->paginate();
 
             //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
         } else {
-            $packages = QueryBuilder::for (Package::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('status', 'status.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    AllowedFilter::exact('workFlow', 'workFlow.id'),
-                    AllowedFilter::exact('LastMile', 'lastMile.id'),
-                    AllowedFilter::exact('FirstMile', 'FirstMile.id'),
-                    AllowedFilter::callback('created_in', function (Builder $query, $value) {
-                        $query->whereBetween('created_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }),
-                    AllowedFilter::callback('updated_in', function (Builder $query, $value) {
-                        $query->whereBetween('updated_at', [Carbon::parse($value[0]), Carbon::parse($value[1])]);
-                    }), // 'created_at','updated_at'
-                ])
-
-                ->latest()
+            $packages = Package::latest()
                 ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
-                ->paginate()
-                ->appends(request()->query());
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+                ->paginate();
         }
         $shippingMethods = WorkFlow::all();
         return inertia('Packages', [
@@ -115,6 +168,7 @@ class PackageController extends Controller
     }
     public function storeEm(StorePackageEmRequest $request)
     {
+        // new UniqueReference(auth()->user())
         // dd('not implemented');
         if (auth()->user()->cannot('create', Package::class)) {
             return back()->with([
@@ -132,8 +186,15 @@ class PackageController extends Controller
             ]);
         }
         if (isset($validated['ShipperId'])) {
+
             $shipper = User::find($validated['ShipperId']);
-            $package = Package::create([
+            $rule = new UniqueReference($shipper);
+            if (!$rule->passes("", $validated['Reference'])) {
+                throw ValidationException::withMessages([
+                    'Reference' => $rule->message()
+                ]);
+            }
+            Package::create([
                 'ShipperID' => $shipper->id,
                 'Amount' => $validated['AmountToCollect'],
                 'Weight' => $validated['Weight'],
@@ -169,7 +230,14 @@ class PackageController extends Controller
                 'LastMileHub' => $lastMileHub->id,
             ]);
         } else {
-            $package = Package::create([
+            $rule = new UniqueReference(auth()->user());
+            // dd('here',$rule);
+            if (!$rule->passes("", $validated['Reference'])) {
+                throw ValidationException::withMessages([
+                    'Reference' => $rule->message()
+                ]);
+            }
+            Package::create([
                 // 'ShipperID' => $loggedUser->id,
                 'Amount' => $validated['AmountToCollect'],
                 'Weight' => $validated['Weight'],
@@ -327,6 +395,7 @@ class PackageController extends Controller
         if (isset($attr['CustomerCin'])) {
             $package->CustomerCin = $attr['CustomerCin'];
         }
+
         $package->ActionID = 8;
         $package->CustomerPhone = $attr['CustomerPhone'];
         $package->CustomerName = $attr['CustomerName'];
@@ -469,7 +538,7 @@ class PackageController extends Controller
         $package->Printed = true;
         $package->update();
         // $random1 = Str::random(8);
-        $filename = Str::random(20);
+        $filename = 'Label-' . Str::random(20);
         Storage::disk('public')->put('labels/' . $filename . '.html', $content);
         $url = Storage::url("labels/" . $filename . '.html');
         // dd($url);
@@ -479,6 +548,7 @@ class PackageController extends Controller
     public function exportLabels(Request $request)
     {
         $data = json_decode($request->input('data'));
+        // dd($);
         $code = auth()->user()->shipmentProvider->template->TemplateCode;
         $bladeView = Blade::compileString($code);
         $packages = Package::whereIn('id', $data)->get();
@@ -525,7 +595,7 @@ class PackageController extends Controller
     public function export(Request $request)
     {
         $filename = Str::random(20);
-        \Maatwebsite\Excel\Facades\Excel::store(new PackageExport, "exports/packages/" . $filename . '.csv', 'public', \Maatwebsite\Excel\Excel::CSV);
+        \Maatwebsite\Excel\Facades\Excel::store(new PackageExport(auth()->user()->isEmployee()), "exports/packages/" . $filename . '.csv', 'public', \Maatwebsite\Excel\Excel::CSV);
 
 
         $url = Storage::url("exports/packages/" . $filename . '.csv');
