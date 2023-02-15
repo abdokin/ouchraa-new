@@ -422,6 +422,7 @@ class PackageController extends Controller
             // return $this->sendError('You cant change this package to be ready to ship ', 'You dont have access for this action');
         }
         $package->StatusID = 2;
+        $package->ActionID = 8;
         $package->update();
 
         return back()->with([
@@ -446,6 +447,7 @@ class PackageController extends Controller
         foreach ($packages as $package) {
             if (auth()->user()->can('readyToShip', $package)) {
                 $package->StatusID = 2;
+                $package->ActionID = 8;
                 $package->update();
             }
         }
@@ -471,6 +473,7 @@ class PackageController extends Controller
         foreach ($packages as $package) {
             if ($request->user()->can('cancel', $package)) {
                 $package->StatusID = 4;
+                $package->ActionID = 8;
                 $package->update();
             }
         }
@@ -488,22 +491,14 @@ class PackageController extends Controller
             ]);
         }
         $package->StatusID = 4;
+        $package->ActionID = 8;
         $package->update();
         return back()->with([
             'type' => 'success',
             'message' => 'Package has been cancled',
         ]);
     }
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'User has been deleted',
-        ]);
-    }
-
+  
 
     public function exportLabel(Package $package)
     {
