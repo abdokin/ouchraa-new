@@ -465,26 +465,29 @@ const Head = ({ openCreate, selected }) => {
                 <div className="form-row">
                     <div className="form-group col-md-2">
                         <Select
-                            options={hubsType.map((it) => {
+                            data={hubsType.map((it) => {
                                 return {
                                     value: it.id,
                                     label: it.ShipmentType,
                                 };
                             })}
-                            label={"Hub Type"}
+                            title={"Hub Type"}
                             onChange={setSelectedHubTypes}
-                            value={selectedHubType}
+                            id="hub_filter_hub_type"
+                            label={"Hub Type"}
+                            // value={selectedHubType}
                         />{" "}
                     </div>
                     <div className="form-group col-md-2">
-                        <SelectNotMulti
+                        <Select
                             label={"Status"}
                             onChange={setStatus}
-                            value={status}
-                            options={[
+                            id="hub_filter_status"
+                            data={[
                                 { value: 1, label: "Enable" },
                                 { value: 0, label: "Disable" },
                             ]}
+                            title="Hub Status"
                         />
                     </div>
                     <div className="form-group col-md-3">
@@ -557,7 +560,7 @@ const Head = ({ openCreate, selected }) => {
                         id="Reset"
                         onClick={() => resetFilter()}
                         type="button"
-                        className="btn btn-danger px-3 mr-2 float-right"
+                        className="btn btn-danger px-3 ml-2 float-right"
                     >
                         Reset
                     </button>
@@ -565,31 +568,10 @@ const Head = ({ openCreate, selected }) => {
                         id="FilterSubmit"
                         type="submit"
                         className="btn btn-primary"
-                        href={`?${
-                            selectedHubType.length > 0
-                                ? `filter[hubtype]=${selectedHubType.map(
-                                      (it) => it.value
-                                  )}`
-                                : ""
-                        }${
-                            status.length > 0
-                                ? `&filter[status]=${status.map(
-                                      (it) => it.value
-                                  )}`
-                                : ""
-                        }${
-                            createdAt[0].endDate
-                                ? `&filter[created_in]=${createdAt[0].startDate.toLocaleDateString()},${createdAt[0].endDate.toLocaleDateString()}`
-                                : ""
-                        }${
-                            updateAt[0].endDate
-                                ? `&filter[updated_in]=${updateAt[0].startDate.toLocaleDateString()},${updateAt[0].endDate.toLocaleDateString()}`
-                                : ""
-                        }`}
                     >
                         Filter
                     </Link>
-                    <button
+                    {/* <button
                         id="ExportButton"
                         type="button"
                         className="btn btn-primary ladda-button px-3 mr-2 float-right"
@@ -597,7 +579,7 @@ const Head = ({ openCreate, selected }) => {
                     >
                         <span className="ladda-label">Export</span>
                         <span className="ladda-spinner"></span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
@@ -708,7 +690,7 @@ function CreateModal({ handleClose }) {
                         </label>
                         <Form.Select
                             id="ShipmentProviderCity"
-                            value={data.ShipmentProviderCity}
+                            value={data?.ShipmentProviderCity}
                             onChange={onChange}
                             title="Select City..."
                             className=" form-control"
@@ -727,17 +709,9 @@ function CreateModal({ handleClose }) {
                         <label for="Type">
                             Hub Type: <i></i>
                         </label>
-                        {/* <SelectPanel
-                            options={hubsType.map((it) => {
-                                return { value: it.id, label: it.ShipmentType };
-                            })}
-                            value={[]}
-                            onChange={(value) => {console.log(value)}}
-                            labelledBy={'Hub-type'}
-                        /> */}
                         <Form.Select
                             id="Type"
-                            value={data.Type}
+                            value={data?.Type}
                             onChange={onChange}
                             title="Select Type..."
                             className=" form-control"
@@ -758,7 +732,7 @@ function CreateModal({ handleClose }) {
                         </label>
                         <Form.Select
                             id="TemplateID"
-                            value={data.TemplateID}
+                            value={data?.TemplateID}
                             onChange={onChange}
                             title="Select Type..."
                             className=" form-control"
@@ -858,7 +832,7 @@ function EditModal({ handleClose, row }) {
                             id="ShipmentProviderName"
                             type="text"
                             onChange={onChange}
-                            value={data.ShipmentProviderName}
+                            value={data?.ShipmentProviderName}
                             className="form-control"
                             placeholder="Enter hub name here..."
                         />
@@ -877,7 +851,7 @@ function EditModal({ handleClose, row }) {
                             id="ShipmentProviderAddress"
                             type="text"
                             onChange={onChange}
-                            value={data.ShipmentProviderAddress}
+                            value={data?.ShipmentProviderAddress}
                             className="form-control"
                             placeholder="Enter hub address here..."
                         />
@@ -897,7 +871,7 @@ function EditModal({ handleClose, row }) {
                             id="ShipmentProviderPhone"
                             type="text"
                             onChange={onChange}
-                            value={data.ShipmentProviderPhone}
+                            value={data?.ShipmentProviderPhone}
                             className="form-control"
                             placeholder="+212661234567"
                         />
@@ -913,7 +887,7 @@ function EditModal({ handleClose, row }) {
                         </label>
                         <Form.Select
                             id="ShipmentProviderCity"
-                            value={data.ShipmentProviderCity}
+                            value={data?.ShipmentProviderCity}
                             onChange={onChange}
                             title="Select City..."
                             className=" form-control"
@@ -942,7 +916,7 @@ function EditModal({ handleClose, row }) {
                         /> */}
                         <Form.Select
                             id="Type"
-                            value={data.Type}
+                            value={data?.Type}
                             onChange={onChange}
                             title="Select Type..."
                             className=" form-control"
@@ -963,7 +937,7 @@ function EditModal({ handleClose, row }) {
                         </label>
                         <Form.Select
                             id="TemplateID"
-                            value={data.TemplateID}
+                            value={data?.TemplateID}
                             onChange={onChange}
                             title="Select Type..."
                             className=" form-control"

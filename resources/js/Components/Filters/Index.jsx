@@ -300,6 +300,112 @@ export function Select({ data, title, onChange, id, label }) {
         </div>
     );
 }
+
+
+export function SelectSingle({ data, title, onChange, id, label ,value}) {
+    const ref = useRef(null);
+    const isMounted = useMountedState();
+    useEffect(() => {
+        if (isMounted) {
+            // alert("cancled");
+
+            $(`#select-drop-${id}`).selectpicker('val',value);
+            
+        }
+    });
+
+    const getListOfSelected = (id) => {
+        var _data = [];
+
+        document
+            .getElementById(`select-${id}`)
+            .children[1].children[2].children[2].children[0].children.forEach(
+                (value, key) => {
+                    if (value.className === "selected") {
+                        _data.push(
+                            value.childNodes[0].childNodes[1].textContent
+                        );
+                    }
+                }
+            );
+
+        var new_data = data.filter((v, i) => {
+            return _data.includes(v.label);
+        });
+        return new_data;
+    };
+
+    return (
+        <div
+            className="dropdown bootstrap-select show-tick form-control"
+            id={`select-${id}`}
+        >
+            {/* <label htmlFor={id}>{label}</label> */}
+            <select
+                className="selectpicker form-control"
+                id={`select-drop-${id}`}
+                title={title}
+                // multiple="multiple"
+                data-live-search="true"
+                data-actions-box="true"
+                // value={value ?? null}
+                onChange={(e) => {
+                    // console.log(getListOfSelected(id));
+                    // onChange(getListOfSelected(id);
+                    onChange(e.target.value)
+                    // console.log()
+                }}
+                data-selected-text-format="count"
+            >
+                {data.map((it) => {
+                    return <option value={it?.value}>{it?.label}</option>;
+                })}
+            </select>
+            <div className="dropdown-menu ">
+                <div className="bs-searchbox">
+                    <input
+                        type="search"
+                        className="form-control"
+                        autocomplete="off"
+                        role="combobox"
+                        aria-label="Search"
+                        aria-controls="bs-select-1"
+                        aria-autocomplete="list"
+                    />
+                </div>
+                <div className="bs-actionsbox">
+                    <div className="btn-group btn-group-sm btn-block">
+                        <button
+                            type="button"
+                            className="actions-btn bs-select-all btn btn-light"
+                        >
+                            Select All
+                        </button>
+                        <button
+                            type="button"
+                            className="actions-btn bs-deselect-all btn btn-light"
+                        >
+                            Deselect All
+                        </button>
+                    </div>
+                </div>
+                <div
+                    className="inner show"
+                    role="listbox"
+                    id="bs-select-1"
+                    ref={ref}
+                    tabindex="-1"
+                    aria-multiselectable="true"
+                >
+                    <ul
+                        className="dropdown-menu inner show"
+                        role="presentation"
+                    ></ul>
+                </div>
+            </div>
+        </div>
+    );
+}
 export function DateRangePicker({ label, id, state, setState }) {
     const isMounted = useMountedState();
 

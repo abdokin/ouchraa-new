@@ -12,6 +12,6 @@ class Role extends Model
         'name', 'slug',
     ];
     public function users() {
-        return $this->belongsToMany(User::class, 'user_roles')->with('city','packagesTotal','driver');
+        return $this->belongsToMany(User::class, 'user_roles')->with('city','driver')->withCount('packageTotalReadyToShip');
     }
 }

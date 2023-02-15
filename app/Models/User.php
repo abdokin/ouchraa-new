@@ -85,7 +85,7 @@ class User extends Authenticatable
     public function packageTotalReadyToShip()
     {
         // RenderTemplate::render()
-        return $this->packages()->where('StatusID',2)->get()->count();
+        return $this->packages()->where('StatusID',2);
     }
 
     public function uploadHistory()

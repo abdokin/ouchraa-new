@@ -27,7 +27,6 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'cin' => $this->faker->text(6),
             'email_verified_at' => now(),
-            'DriverID' => 3,
             'password' => $password = \Hash::make('password'),
             // password'
             'remember_token' => Str::random(10),

@@ -84,18 +84,18 @@ export default function Index(props) {
                                                     props.packages.per_page
                                                 }
                                                 className="custom-select custom-select-sm form-control form-control-sm"
-                                                onChange={(e) =>
-                                                    Inertia.get(
-                                                        route(
-                                                            "packages.index",
-                                                            {
-                                                                per_page:
-                                                                    e.target
-                                                                        .value,
-                                                            }
-                                                        )
-                                                    )
-                                                }
+                                                // onChange={(e) =>
+                                                //     Inertia.get(
+                                                //         route(
+                                                //             "packages.index",
+                                                //             {
+                                                //                 per_page:
+                                                //                     e.target
+                                                //                         .value,
+                                                //             }
+                                                //         )
+                                                //     )
+                                                // }
                                             >
                                                 <option value="10">10</option>
                                                 <option value="25">25</option>

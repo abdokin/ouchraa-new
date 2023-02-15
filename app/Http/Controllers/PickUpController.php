@@ -13,6 +13,22 @@ use Inertia\Inertia;
 
 class PickUpController extends Controller
 {
+    public function updateDriver(Request $req, User $user)
+    {
+        // TODO fix security
+
+
+        $validated = $req->validate([
+            'driver' => ['required', 'exists:users,id']
+        ]);
+        $user->DriverID = $validated['driver'];
+        $user->update();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'shipper updated'
+        ]);
+
+    }
     public function packages()
     {
         $isEmployee = auth()->user()->isEmployee();
@@ -21,7 +37,8 @@ class PickUpController extends Controller
         }
         $packages = [];
         $reason = Reason::all()->filter(function ($value, $key) {
-            $workflow = data_get($value, 'Workflow');
+            $workflow = json_decode(data_get($value, 'Workflow'));
+            // dd(json_decode($workflow));
             return in_array(2, $workflow);
         })->toArray();
         $cities = City::where('status', true)->get();
@@ -29,9 +46,18 @@ class PickUpController extends Controller
         if ($isEmployee) {
             $shippers = Role::where('slug', 'shipper')->first()->users;
 
-            $packages = Package::latest()->where('StatusID', 2)->where('WorkflowID', 2)->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')->paginate(auth()->user()->page_size);
+            $packages = Package::latest()
+                ->where('StatusID', 2)->where('WorkflowID', 2)
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod', 'LastMile')
+                ->paginate();
         } else {
-            $packages = Package::latest()->where('StatusID', 2)->where('WorkflowID', 2)->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->where('ShipperID', auth()->user()->id)->latest()->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')->paginate(auth()->user()->page_size);
+            $packages = Package::latest()->where('StatusID', 2)
+                ->where('WorkflowID', 2)
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->where('ShipperID', auth()->user()->id)
+                ->latest()->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod', 'LastMile')
+                ->paginate();
 
         }
         $shippingMethods = WorkFlow::all();
@@ -50,11 +76,13 @@ class PickUpController extends Controller
     public function shippers()
     {
         $shippers = Role::where('slug', 'shipper')->first()->users()->paginate();
+        $drivers = Role::where('slug', 'driver')->first()->users;
         if (!auth()->user()->isEmployee()) {
             return to_route('packages.index');
         }
         return Inertia::render('PickUp/Shippers', [
-            'shippers' => $shippers
+            'shippers' => $shippers,
+            'drivers' => $drivers
         ]);
     }
     public function dropoff()
@@ -65,25 +93,29 @@ class PickUpController extends Controller
         $isEmployee = auth()->user()->isEmployee();
         $packages = [];
         $reason = Reason::all()->filter(function ($value, $key) {
-            $workflow = data_get($value, 'Workflow');
+            $workflow = json_decode(data_get($value, 'Workflow'));
             return in_array(2, $workflow);
         })->toArray();
-        // dd($reason);
-
         $cities = City::where('status', true)->get();
         $shippers = [];
         if ($isEmployee) {
             $shippers = Role::where('slug', 'shipper')->first()->users;
 
-            $packages = Package::latest()->where('StatusID', 2)->where('WorkflowID', 1)->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')->paginate(auth()->user()->page_size);
+            $packages = Package::latest()->where('StatusID', 2)
+                ->where('WorkflowID', 1)->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->with('status', 'LastMile', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
+                ->paginate(auth()->user()->page_size);
         } else {
-            $packages = Package::Latest()->where('StatusID', 2)->where('WorkflowID', 1)->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->where('ShipperID', auth()->user()->id)->latest()->with('status', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')->paginate(auth()->user()->page_size);
+            $packages = Package::Latest()->where('StatusID', 2)->where('WorkflowID', 1)
+                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->where('ShipperID', auth()->user()->id)
+                ->latest()->with('status', 'LastMile', 'customerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'driver', 'History', 'shippingMethod')
+                ->paginate(auth()->user()->page_size);
 
         }
         // dd($packages);
         $shippingMethods = WorkFlow::all();
         return Inertia::render('PickUp/DropOff', [
-
             'packages' => $packages,
             'shippers' => $shippers,
             'cities' => $cities,
@@ -107,6 +139,7 @@ class PickUpController extends Controller
             'type' => 'success'
         ]);
     }
+
     public function notpickup(Request $request, Package $package)
     {
         $val = $request->validate([
@@ -114,6 +147,7 @@ class PickUpController extends Controller
         ]);
         // $package->WorkflowID = $package->ShippingMethod;
         $package->StatusID = 17;
+        $package->ActionID = 8;
         $package->ReasonID = $val['reasonId'];
         // add location
         $package->update();
@@ -123,14 +157,81 @@ class PickUpController extends Controller
         ]);
     }
 
+    public function notPickAll(Request $request)
+    {
+
+        $validated = $request->validate([
+            'data' => 'required',
+            'reasonId' => 'required|exists:reasons,id'
+        ]);
+        $packages = Package::whereIn('id', $validated['data'])->get();
+        if (!$packages) {
+            return back()->with([
+                'type' => 'error',
+                'message' => 'Error occured'
+
+            ]);
+        }
+        foreach ($packages as $package) {
+            if (auth()->user()->can('readyToShip', $package)) {
+                $package->WorkflowID = $package->ShippingMethod;
+                $package->StatusID = 17;
+                $package->ActionID = 8;
+                $package->ReasonID = $validated['reasonId'];
+                // add location
+                $package->update();
+            }
+        }
+
+        return back()->with([
+            'message' => 'Package Not Accepted',
+            'type' => 'success'
+        ]);
+    }
+
     public function dropped(Package $package)
     {
         // pick up the packages
         // dd($package);
+
+
         $package->WorkflowID = $package->ShippingMethod;
         $package->StatusID = 6;
         // add location
+        $package->ActionID = 8;
         $package->update();
+
+        return back()->with([
+            'message' => 'Package Picked',
+            'type' => 'success'
+        ]);
+    }
+
+    public function droppedAll(Request $request)
+    {
+        // pick up the packages
+        // dd($package);
+
+        $validated = $request->validate([
+            'data' => 'required',
+        ]);
+        $packages = Package::whereIn('id', $validated['data'])->get();
+        if (!$packages) {
+            return back()->with([
+                'type' => 'error',
+                'message' => 'Error occured'
+
+            ]);
+        }
+        foreach ($packages as $package) {
+            if (auth()->user()->can('readyToShip', $package)) {
+                $package->WorkflowID = $package->ShippingMethod;
+                $package->StatusID = 6;
+                $package->ActionID = 8;
+                // add location
+                $package->update();
+            }
+        }
 
         return back()->with([
             'message' => 'Package Picked',
@@ -144,9 +245,42 @@ class PickUpController extends Controller
         ]);
         // $package->WorkflowID = $package->ShippingMethod;
         $package->StatusID = 19;
+        $package->ActionID = 8;
         $package->ReasonID = $val['reasonId'];
         // add location
         $package->update();
+        return back()->with([
+            'message' => 'Package Not Accepted',
+            'type' => 'success'
+        ]);
+    }
+
+    public function notAcceptedAll(Request $request)
+    {
+
+        $validated = $request->validate([
+            'data' => 'required',
+            'reasonId' => 'required|exists:reasons,id'
+        ]);
+        $packages = Package::whereIn('id', $validated['data'])->get();
+        if (!$packages) {
+            return back()->with([
+                'type' => 'error',
+                'message' => 'Error occured'
+
+            ]);
+        }
+        foreach ($packages as $package) {
+            if (auth()->user()->can('readyToShip', $package)) {
+                $package->WorkflowID = $package->ShippingMethod;
+                $package->StatusID = 19;
+                $package->ActionID = 8;
+                $package->ReasonID = $validated['reasonId'];
+                // add location
+                $package->update();
+            }
+        }
+
         return back()->with([
             'message' => 'Package Not Accepted',
             'type' => 'success'

@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->foreignId('CurrentShipmentProvider')->references('id')->on('shipment_providers');
             $table->string('TrackingPrefix')->default('MC'); //TODO
             $table->float('Discount')->default(0);
-            $table->foreignId('DriverID')->references('id')->on('users');
+            $table->foreignId('DriverID')->nullable()->references('id')->on('users');
             $table->foreignId('PickupDeliveryOption')->references('id')->on('work_flows');
             $table->decimal('PickupDeliveryPrice')->default(1);
             // options

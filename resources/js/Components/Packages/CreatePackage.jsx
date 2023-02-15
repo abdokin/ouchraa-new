@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import React, { useEffect, useState } from "react";
 import Switch from "react-switchery-component";
 import toast, { Toaster } from "react-hot-toast";
+import { SelectSingle } from "../Filters/Index";
 
 export function CreatePackageModal({
     shippers,
@@ -38,6 +39,8 @@ export function CreatePackageModal({
     });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
+    const onChangeId = (id, value) => setData({ ...data, [id]: value });
+
     // onChangeCheck
     const onChangeCheck = (e) =>
         setData({ ...data, [e.target.id]: JSON.parse(e.target.value) });
@@ -76,6 +79,11 @@ export function CreatePackageModal({
         });
     };
 
+
+    const shippingMethod = shippingMethods.filter((it) => {
+        return it.WorkflowName.startsWith("Forward");
+    });
+
     return (
         <form onSubmit={onSubmit}>
             <Toaster position="top-center" duration="4000" />
@@ -88,7 +96,7 @@ export function CreatePackageModal({
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={() => handleClose()}
+                    onClick={() => close()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -129,25 +137,22 @@ export function CreatePackageModal({
                             style={{ display: !hasAccount ? " none" : null }}
                         >
                             <div className="col-md-4 mt-3">
-                                <label htmlFor="ShipperListCR">
+                                <label htmlFor="ShipperId">
                                     Shipper Name: <i></i>
                                 </label>
-                                <Form.Select
-                                    id="ShipperId"
-                                    value={data.ShipperId}
-                                    onChange={onChange}
-                                    title="Select shipper name..."
-                                    className=" form-control"
-                                >
-                                    <option></option>
-                                    {shippers.map((it) => {
-                                        return (
-                                            <option value={it.id}>
-                                                {it.UserName}
-                                            </option>
-                                        );
+                                <SelectSingle
+                                    id={"ShipperId"}
+                                    title="Select Shipper Name"
+                                    onChange={(v) => {
+                                        onChangeId("ShipperId", v);
+                                    }}
+                                    data={shippers.map((it) => {
+                                        return {
+                                            value: it.id,
+                                            label: it.UserName,
+                                        };
                                     })}
-                                </Form.Select>{" "}
+                                />
                                 {errors && (
                                     <div className="text-danger mt-1">
                                         {errors.ShipperId}
@@ -218,22 +223,21 @@ export function CreatePackageModal({
                                 <label htmlFor="ShipperCity">
                                     Shipper City: <i></i>
                                 </label>
-                                <Form.Select
-                                    id="ShipperCity"
-                                    value={data.ShipperCity}
-                                    onChange={onChange}
-                                    aria-label="Shipper City Select"
-                                    className=" form-control"
-                                >
-                                    <option></option>
-                                    {cities.map((it) => {
-                                        return (
-                                            <option value={it.id}>
-                                                {it?.localite}
-                                            </option>
-                                        );
+
+                                <SelectSingle
+                                    id={"ShipperCity"}
+                                    title="Shipper City Select"
+                                    onChange={(v) => {
+                                        onChangeId("ShipperCity", v);
+                                    }}
+                                    data={cities.map((it) => {
+                                        return {
+                                            value: it.id,
+                                            label: it.localite,
+                                        };
                                     })}
-                                </Form.Select>
+                                />
+
                                 {errors && (
                                     <div className="text-danger mt-1">
                                         {errors.ShipperCity}
@@ -348,23 +352,16 @@ export function CreatePackageModal({
                         <label htmlFor="RecipientCity">
                             Recipient City: <i></i>
                         </label>
-                        <Form.Select
-                            id="RecipientCity"
-                            value={data.RecipientCity}
-                            onChange={onChange}
-                            aria-label="Recipient City Select"
-                            className="form-control"
-                            data-live-search="true"
-                        >
-                            <option></option>
-                            {cities.map((it) => {
-                                return (
-                                    <option value={it.id}>
-                                        {it?.localite}
-                                    </option>
-                                );
+                        <SelectSingle
+                            id={"RecipientCity"}
+                            title="Recipient City Select"
+                            onChange={(v) => {
+                                onChangeId("RecipientCity", v);
+                            }}
+                            data={cities.map((it) => {
+                                return { value: it.id, label: it.localite };
                             })}
-                        </Form.Select>
+                        />
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.RecipientCity}
@@ -439,24 +436,20 @@ export function CreatePackageModal({
                         <label htmlFor="ShippingMethod">
                             Shipping Method: <i></i>
                         </label>
-                        <Form.Select
-                            id="ShippingMethod"
-                            aria-label="Shipping Method Select"
-                            value={data.ShippingMethod}
-                            onChange={onChange}
-                            className=" form-control"
-                        >
-                            <option></option>
-                            {shippingMethods.map((it) => {
-                                if (it.WorkflowName.startsWith("Forward")) {
-                                    return (
-                                        <option value={it.id}>
-                                            {it.WorkflowName}
-                                        </option>
-                                    );
-                                }
+                      
+                        <SelectSingle
+                            id={"ShippingMethod"}
+                            title="Shipping Method Select"
+                            onChange={(v) => {
+                                onChangeId("ShippingMethod", v);
+                            }}
+                            data={shippingMethod.map((it) => {
+                                    return {
+                                        value: it.id,
+                                        label: it.WorkflowName,
+                                    };
                             })}
-                        </Form.Select>
+                        />
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.ShippingMethod}

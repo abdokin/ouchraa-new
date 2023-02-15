@@ -19,6 +19,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $driver = User::factory(1)->create([
+            'email' => 'driver@project.me',
+            'password' => 'driver',
+            'UserName' => 'Ouchraa driver',
+            'ShipperCity' => City::first()->id,
+        ])->first();
         $admin = User::factory(1)->create([
             'email' => 'admin@project.me',
             'password' => 'admin',
@@ -26,21 +32,19 @@ class UserSeeder extends Seeder
             'ShipperCity' => City::first()->id,
             'PickupDeliveryOption' => 1,
             'ReverseDeliveryPrice' => 1,
+            'DriverID' => $driver->id,
+
             'CurrentShipmentProvider' => 1,
             'ShipmentProviderAccess' => [1,2]
         ])->first();
         $shipper = User::factory(1)->create([
             'email' => 'user@project.me',
             'password' => 'user',
+            'DriverID' => $driver->id,
             'UserName' => 'Ouchraa demo',
             'ShipperCity' => City::first()->id,
         ])->first();
-        $driver = User::factory(1)->create([
-            'email' => 'driver@project.me',
-            'password' => 'driver',
-            'UserName' => 'Ouchraa driver',
-            'ShipperCity' => City::first()->id,
-        ])->first();
+ 
         $admin->roles()->attach(Role::where('slug', 'own-team')->first());
         $admin->accesses()->attach(Access::all());
         $shipper->roles()->attach(Role::where('slug', 'shipper')->first());

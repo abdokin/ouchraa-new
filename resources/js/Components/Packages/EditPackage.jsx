@@ -2,6 +2,7 @@ import { useForm } from "@inertiajs/inertia-react";
 import Form from "react-bootstrap/Form";
 import React, { useEffect, useState } from "react";
 import Switch from "react-switchery-component";
+import { SelectSingle } from "../Filters/Index";
 
 export function EditPackageModale({
     packageCurrent,
@@ -50,6 +51,8 @@ export function EditPackageModale({
     });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
+    const onChangeId = (id, value) => setData({ ...data, [id]: value });
+
     // onChangeCheck
     const onChangeCheck = (e) =>
         setData({ ...data, [e.target.id]: JSON.parse(e.target.value) });
@@ -82,6 +85,9 @@ export function EditPackageModale({
             }
         );
     };
+    const shippingMethod = shippingMethods.filter((it) => {
+        return it.WorkflowName.startsWith("Forward");
+    });
 
     return (
         <form onSubmit={onSubmit}>
@@ -138,22 +144,20 @@ export function EditPackageModale({
                                 <label htmlFor="ShipperListCR">
                                     Shipper Name: <i></i>
                                 </label>
-                                <Form.Select
-                                    id="ShipperId"
-                                    value={data.ShipperId}
-                                    onChange={onChange}
+                                <SelectSingle
+                                    id={"ShipperId"}
                                     title="Select shipper name..."
-                                    className=" form-control"
-                                >
-                                    <option></option>
-                                    {shippers.map((it) => {
-                                        return (
-                                            <option value={it.id}>
-                                                {it.UserName}
-                                            </option>
-                                        );
+                                    onChange={(v) => {
+                                        onChangeId("ShipperCity", v);
+                                    }}
+                                    value={data.ShipperId}
+                                    data={shippers.map((it) => {
+                                        return {
+                                            value: it.id,
+                                            label: it.UserName,
+                                        };
                                     })}
-                                </Form.Select>{" "}
+                                />
                                 {errors && (
                                     <div className="text-danger mt-1">
                                         {errors.ShipperId}
@@ -224,21 +228,20 @@ export function EditPackageModale({
                                 <label htmlFor="ShipperCity">
                                     Shipper City: <i></i>
                                 </label>
-                                <Form.Select
-                                    id="ShipperCity"
+                                <SelectSingle
                                     value={data.ShipperCity}
-                                    onChange={onChange}
-                                    aria-label="Shipper City Select"
-                                    className=" form-control"
-                                >
-                                    {cities.map((it) => {
-                                        return (
-                                            <option value={it.id}>
-                                                {it.localite}
-                                            </option>
-                                        );
+                                    id={"ShipperCity"}
+                                    title="Shipper City Select"
+                                    onChange={(v) => {
+                                        onChangeId("ShipperCity", v);
+                                    }}
+                                    data={cities.map((it) => {
+                                        return {
+                                            value: it.id,
+                                            label: it.localite,
+                                        };
                                     })}
-                                </Form.Select>
+                                />
                                 {errors && (
                                     <div className="text-danger mt-1">
                                         {errors.ShipperCity}
@@ -353,21 +356,17 @@ export function EditPackageModale({
                         <label htmlFor="CustomerCity">
                             Customer City: <i></i>
                         </label>
-                        <Form.Select
-                            id="CustomerCity"
+                        <SelectSingle
                             value={data.CustomerCity}
-                            onChange={onChange}
-                            aria-label="Customer City Select"
-                            className="form-control"
-                            data-live-search="true"
-                        >
-                            <option></option>
-                            {cities.map((it) => {
-                                return (
-                                    <option value={it.id}>{it.localite}</option>
-                                );
+                            id={"RecipientCity"}
+                            title="Customer City Select"
+                            onChange={(v) => {
+                                onChangeId("RecipientCity", v);
+                            }}
+                            data={cities.map((it) => {
+                                return { value: it.id, label: it.localite };
                             })}
-                        </Form.Select>
+                        />
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.CustomerCity}
@@ -442,22 +441,21 @@ export function EditPackageModale({
                         <label htmlFor="ShippingMethod">
                             Shipping Method: <i></i>
                         </label>
-                        <Form.Select
-                            id="ShippingMethod"
-                            aria-label="Shipping Method Select"
+
+                        <SelectSingle
+                            id={"ShippingMethod"}
+                            title="Shipping Method Select"
+                            onChange={(v) => {
+                                onChangeId("ShippingMethod", v);
+                            }}
                             value={data.ShippingMethod}
-                            onChange={onChange}
-                            className=" form-control"
-                        >
-                            <option></option>
-                            {shippingMethods.map((it) => {
-                                return (
-                                    <option value={it.id}>
-                                        {it.WorkflowName}
-                                    </option>
-                                );
+                            data={shippingMethod.map((it) => {
+                                return {
+                                    value: it.id,
+                                    label: it.WorkflowName,
+                                };
                             })}
-                        </Form.Select>
+                        />
                         {errors && (
                             <div className="text-danger mt-1">
                                 {errors.ShippingMethod}
