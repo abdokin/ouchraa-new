@@ -1,0 +1,2 @@
+tracking_number,reference,customer_name,customer_phone,customer_email,customer_address,customer_city,latitude,longitude,shipping_method,amount_to_collect,weight,declared_value,fragile,proof_distributed_object,product_description,check_package
+test-upload-shipper,my-package,abdo,021312312,test@gmail.com,here,OUAHAT SIDI BRAHIM,0,0,Forward Pickup station,100,100,100,true,true,my pakcgae,true

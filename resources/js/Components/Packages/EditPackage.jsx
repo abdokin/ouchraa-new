@@ -55,7 +55,7 @@ export function EditPackageModale({
 
     // onChangeCheck
     const onChangeCheck = (e) =>
-        setData({ ...data, [e.target.id]: JSON.parse(e.target.value) });
+        setData({ ...data, [e.target.id]: e.target.checked });
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -585,7 +585,7 @@ export function EditPackageModale({
                                 type="checkbox"
                                 className="custom-control-input"
                                 id="CheckPackage"
-                                checked={data.CheckPackage}
+                                defaultChecked={data.CheckPackage}
                                 value={data.CheckPackage}
                                 onChange={onChangeCheck}
                             />

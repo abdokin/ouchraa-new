@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { Link } from "@inertiajs/inertia-react";
 import { ShowPackage } from "../../Components/Packages/ShowPackage";
 import { EditPackageModale } from "../../Components/Packages/EditPackage";
-import { useLocalStorage, useMap, useMountedState } from "react-use";
+import { useMap } from "react-use";
 import Collapse from "react-bootstrap/Collapse";
 import Filters from "../../Components/Filters/Index";
 import { Choice } from "../Configuration/Cities";
@@ -16,11 +16,8 @@ export default function Index(props) {
     const [edit, setEdit] = useState(false);
 
     const [packageCurrent, setPackageCurrent] = useState();
-    // const [selectedRows, setSelectedRows] = useState([]);
 
     const [map, { set, setAll, remove, reset }] = useMap();
-    // const [page,setPage] = useState(10);
-    console.log("package", props.packages);
     return (
         <>
             <div className="container-fluid py-4">
@@ -150,8 +147,6 @@ export default function Index(props) {
                                             role="status"
                                             aria-live="polite"
                                         >
-                                            {/* {total > 1 ? 'Show'} */}
-                                            {}
                                             Showing 1 to{" "}
                                             {props.packages.per_page} of{" "}
                                             {props.packages.total} entries
@@ -617,7 +612,7 @@ function Table({
                                             <button
                                                 onClick={() => {
                                                     setCurrentID(it.id);
-                                                    setCh(true);
+                                                    setChoiceCancel(true);
                                                 }}
                                                 id="MonoCancelPackage"
                                                 data-packageid={it.id}

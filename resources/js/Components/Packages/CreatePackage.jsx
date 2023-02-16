@@ -49,36 +49,30 @@ export function CreatePackageModal({
 
     const onSubmit = (e) => {
         e.preventDefault();
+
         if (!isShipper) {
             post(route("package.storeEm"), {
                 data,
                 onSuccess: () => {
-                    console.log("here");
-
                     reset(), close();
                 },
-                onFinish: () => {
-                    if (Object.keys(errors).length > 0) {
-                        toast["error"](errors[Object.keys(errors)[0]]);
-                    }
-                },
+                onFinish: () => {},
             });
-            return;
+            // return;
+        } else {
+            post(route("packages.store"), {
+                data,
+                onSuccess: () => {
+                    reset(), close();
+                },
+                onFinish: () => {},
+            });
         }
-        post(route("packages.store"), {
-            data,
-            onSuccess: () => {
-                reset(), close();
-            },
-            onFinish: () => {
-                if (Object.keys(errors).length > 0) {
-                    console.log("here");
-                    toast["error"](errors[Object.keys(errors)[0]]);
-                }
-            },
-        });
+        if (errors && Object.keys(errors).length > 0) {
+            toast["error"](errors[Object.keys(errors)[0]]);
+        }
+        reset();
     };
-
 
     const shippingMethod = shippingMethods.filter((it) => {
         return it.WorkflowName.startsWith("Forward");
@@ -436,7 +430,7 @@ export function CreatePackageModal({
                         <label htmlFor="ShippingMethod">
                             Shipping Method: <i></i>
                         </label>
-                      
+
                         <SelectSingle
                             id={"ShippingMethod"}
                             title="Shipping Method Select"
@@ -444,10 +438,10 @@ export function CreatePackageModal({
                                 onChangeId("ShippingMethod", v);
                             }}
                             data={shippingMethod.map((it) => {
-                                    return {
-                                        value: it.id,
-                                        label: it.WorkflowName,
-                                    };
+                                return {
+                                    value: it.id,
+                                    label: it.WorkflowName,
+                                };
                             })}
                         />
                         {errors && (

@@ -40,10 +40,6 @@ class PackageController extends Controller
             // 
         }
         $filter = $data->filter;
-        // dd($data->filter && isset($filter->status) && !empty($filter->status));
-        // dd($data->filter && isset($filter->workFlow) && !empty($filter->status));
-        // dd($data->filter && isset($filter->customerCity)  && !empty($filter->customerCity));
-
         $isEmployee = auth()->user()->isEmployee();
         $packages = null;
         $cities = City::where('status', true)->get();
@@ -149,6 +145,8 @@ class PackageController extends Controller
         } else {
             $packages = Package::latest()
                 ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+                ->where('ShipperID', auth()->id())
+
                 ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
                 ->paginate();
         }
