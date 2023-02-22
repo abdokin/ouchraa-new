@@ -98,7 +98,8 @@ export default function Navbar({ props, pageName }) {
                         <li className="nav-item">
                             <Link
                                 className={`${
-                                    route().current("packages.uploads") && "active"
+                                    route().current("packages.uploads") &&
+                                    "active"
                                 } nav-link dropdown-toggle dropdown-nocaret position-relative`}
                                 href={route("packages.uploads")}
                             >
@@ -308,11 +309,15 @@ export default function Navbar({ props, pageName }) {
                                     className="float-left mr-2"
                                     bis_skin_checked="1"
                                 >
-                                    <h6 className="mb-0">{auth.user.UserName}</h6>{" "}
-                                    <small>{auth.current_hub.ShipmentProviderName}</small>
+                                    <h6 className="mb-0">
+                                        {auth.user.UserName}
+                                    </h6>
+                                    <small>
+                                        {auth.current_hub.ShipmentProviderName}
+                                    </small>
                                 </div>
                                 <img
-                                    src="/assets/avatars/users.jpg"
+                                    src={`https://api.dicebear.com/5.x/pixel-art/svg?seed=${auth.user.UserName}`}
                                     className="avatar avatar-1 rounded-circle"
                                     alt="Avatar image"
                                 />
@@ -350,12 +355,18 @@ export default function Navbar({ props, pageName }) {
                                     <i className="fas fa-cog"></i>
                                     <span>Configuration</span>
                                 </Link>
-                                <a href="/switch-hubs" className="dropdown-item">
+                                <a
+                                    href="/switch-hubs"
+                                    className="dropdown-item"
+                                >
                                     <i className="fas fa-shipping-fast"></i>
                                     <span>Drivers Management</span>
                                 </a>
-                             
-                                <a href="/switch-hubs" className="dropdown-item">
+
+                                <a
+                                    href="/switch-hubs"
+                                    className="dropdown-item"
+                                >
                                     <i className="fas fa-code"></i>
                                     <span>API</span>
                                 </a>

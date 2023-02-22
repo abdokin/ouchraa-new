@@ -32,7 +32,7 @@ class StorePackageRequest extends FormRequest
             // 'ShipperEmail' =>[''],
             // 'ShipperCin' =>[''],
             'RecipientName' => ['required'],
-            'RecipientPhoneNumber' => ['required'],
+            'RecipientPhoneNumber' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:10'],
             'RecipientAddress' => ['required'],
             'RecipientEmail' => ['email'],
             'Weight' => 'required|numeric|min:0',

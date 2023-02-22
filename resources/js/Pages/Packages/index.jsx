@@ -103,22 +103,6 @@ export default function Index(props) {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="col-sm-12 col-md-6 pr-5 pb-2">
-                                    <div
-                                        id="tabledata_filter"
-                                        className="dataTables_filter"
-                                    >
-                                        <label>
-                                            Search:
-                                            <input
-                                                type="search"
-                                                className="form-control form-control-sm"
-                                                placeholder=""
-                                                aria-controls="tabledata"
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
                             <Table
                                 packages={props.packages.data}
@@ -479,7 +463,6 @@ function Table({
                                 <td
                                     style={{ cursor: "pointer" }}
                                     id="Overview"
-                                    data-packageid={it.id}
                                     onClick={() => openShow(it)}
                                     data-toggle="modal"
                                     data-target="#overview-modal"
@@ -565,9 +548,8 @@ function Table({
                                         >
                                             <a
                                                 href={`/packages/label/${it.id}`}
-                                                target="_blank"
+                                                // target="_blank"
                                                 id="DownloadLabel"
-                                                data-packageid={it}
                                                 onClick={() => {
                                                     Inertia.get(
                                                         route("packages.index")
@@ -584,8 +566,7 @@ function Table({
                                                     setCurrentID(it.id);
                                                     setChoiceReady(true);
                                                 }}
-                                                id="MonoReadytoShip"
-                                                data-packageid={it.id}
+                                                id="MonoReadyShip"
                                                 className="dropdown-item"
                                             >
                                                 <i className="fas fa-dolly-flatbed"></i>
@@ -594,7 +575,6 @@ function Table({
                                             <button
                                                 id="MonoEditPackage"
                                                 onClick={() => openEdit(it)}
-                                                data-packageid={it.id}
                                                 className="dropdown-item"
                                             >
                                                 <i className="fas fa-pencil-alt"></i>
@@ -603,7 +583,6 @@ function Table({
                                             <a
                                                 href=""
                                                 id="MonoReturnCustomer"
-                                                data-packageid={it.id}
                                                 className="dropdown-item"
                                             >
                                                 <i className="fas fa-undo-alt"></i>
@@ -615,7 +594,6 @@ function Table({
                                                     setChoiceCancel(true);
                                                 }}
                                                 id="MonoCancelPackage"
-                                                data-packageid={it.id}
                                                 className="dropdown-item"
                                             >
                                                 <i className="fas fa-trash"></i>
@@ -627,6 +605,9 @@ function Table({
                             </tr>
                         );
                     })}
+                    {packages.length == 0 && (
+                        <div className="m-2 p-2">There is Not data</div>
+                    )}
                 </tbody>
             </table>
         </>
@@ -635,21 +616,25 @@ function Table({
 
 function Head({ handleShow, workflow, rowSelected }) {
     const [filtersOpen, setFiltersOpen] = useState(false);
+    const [filters, setFilter] = useState(null);
+
     const readyToShips = (ids) => {
-        // console.log(id);
         Inertia.post(route("package.readyToShips"), {
             data: ids,
         });
     };
     const cancels = (ids) => {
-        // console.log(id);
         Inertia.post(route("package.cancels"), {
             data: ids,
         });
     };
     const [choiceReady, setChoiceReady] = useState(false);
     const [choiceCancel, setChoiceCancel] = useState(false);
-
+    const exportPackages = () => {
+        Inertia.post(route("package.export"), {
+            filter: filters,
+        });
+    };
     return (
         <header>
             <Modal
@@ -682,7 +667,7 @@ function Head({ handleShow, workflow, rowSelected }) {
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb m-0 mt-1 p-0 breadcrumbs-chevron">
                             <li className="breadcrumb-item">
-                                <a href="/">Dashboard</a>
+                                <Link href="/dashboard">Dashboard</Link>
                             </li>
                             <li
                                 className="breadcrumb-item active"
@@ -693,8 +678,25 @@ function Head({ handleShow, workflow, rowSelected }) {
                         </ol>
                     </nav>
                 </div>
-                <div className="d-flex gap-3  justify-content-between">
-                    <div className="dropdown ml-2">
+                <div className="d-flex gap-2  justify-content-end">
+                    <button
+                        onClick={() => handleShow()}
+                        id="Create"
+                        className="btn btn-success "
+                        data-target="#package-create"
+                    >
+                        <i className="fas fa-plus-circle"></i> Create
+                    </button>
+                    <button
+                        id="Export"
+                        onClick={() => {
+                            exportPackages();
+                        }}
+                        className="btn btn-primary "
+                    >
+                        <i className="fas fa-download"></i> <span>Export</span>
+                    </button>
+                    <div className="dropdown ">
                         <button
                             className="btn  btn-dark dropdown-toggle"
                             type="button"
@@ -719,7 +721,6 @@ function Head({ handleShow, workflow, rowSelected }) {
                                     );
                                 }}
                                 id="DownloadLabel"
-                                // data-packageid={it.id}
                                 className="dropdown-item"
                             >
                                 <i className="fas fa-download"></i>
@@ -729,17 +730,14 @@ function Head({ handleShow, workflow, rowSelected }) {
                                 onClick={(e) => {
                                     setChoiceReady(true);
                                 }}
-                                id="MonoReadytoShip"
-                                // dataPackageid={it.id}
+                                id="ReadyShip"
                                 className="dropdown-item"
                             >
                                 <i className="fas fa-dolly-flatbed"></i>
                                 <span>Ready to Ship</span>
                             </button>
                             <button
-                                // value={it.id}
                                 id="MonoEditPackage"
-                                // data-packageid={it.id}
                                 className="dropdown-item"
                             >
                                 <i className="fas fa-pencil-alt"></i>
@@ -748,7 +746,6 @@ function Head({ handleShow, workflow, rowSelected }) {
                             <a
                                 href=""
                                 id="MonoReturnCustomer"
-                                // data-packageid={it.id}
                                 className="dropdown-item"
                             >
                                 <i className="fas fa-undo-alt"></i>
@@ -767,38 +764,22 @@ function Head({ handleShow, workflow, rowSelected }) {
                             </button>
                         </div>
                     </div>
-                    <div>
-                        <button
-                            onClick={() => handleShow()}
-                            id="Create"
-                            className="btn btn-success "
-                            // dataToggle="modal"
-                            data-target="#package-create"
-                        >
-                            <i className="fas fa-plus-circle"></i> Create
-                        </button>
-                        <a
-                            href="/export/packages"
-                            id="Export"
-                            className="btn btn-primary ml-2"
-                        >
-                            <i className="fas fa-download"></i>{" "}
-                            <span>Export</span>
-                        </a>
-
-                        <button
-                            id="Filter"
-                            className="btn btn-info ml-2"
-                            onClick={() => setFiltersOpen(!filtersOpen)}
-                        >
-                            <i className="fas fa-filter"></i> Filter
-                        </button>
-                    </div>
+                    <button
+                        id="Filter"
+                        className="btn btn-info "
+                        onClick={() => setFiltersOpen(!filtersOpen)}
+                    >
+                        <i className="fas fa-filter"></i> Filter
+                    </button>
                 </div>
             </div>
             <Collapse in={filtersOpen}>
                 <div id="example-collapse-text">
-                    <Filters />
+                    <Filters
+                        setFiltersCallBack={(d) => {
+                            setFilter(d);
+                        }}
+                    />
                 </div>
             </Collapse>
         </header>

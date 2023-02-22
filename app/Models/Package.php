@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Rules\UniqueTrackingNumber;
-use Database\Seeders\PlTrackingNumberSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use PhpParser\Error;
 
 class Package extends Model
@@ -54,7 +53,64 @@ class Package extends Model
         'CreatedBy',
         'UpdatedBy'
     ];
+    public function scopeFilterIndex($query, $filter)
+    {
 
+        // dd($filter);
+        return $query->when($filter && isset($filter->status) && !empty($filter->status), function ($q) use ($filter) {
+            return $q->whereIn('StatusID', $filter->status);
+
+        })
+            ->when($filter && isset($filter->workFlow) && !empty($filter->workFlow), function ($q) use ($filter) {
+                return $q->whereIn('WorkflowID', $filter->workFlow);
+            })
+            ->when($filter && isset($filter->search) && !empty($filter->search), function ($q) use ($filter) {
+                return $q->where('TrackingNumber', $filter->search)
+                    ->orWhere('Reference', $filter->search);
+
+            })
+            ->when($filter && isset($filter->customerCity) && !empty($filter->customerCity), function ($q) use ($filter) {
+                return $q->whereIn('CustomerCity', $filter->customerCity);
+
+            })
+            ->when($filter && isset($filter->firstMile) && !empty($filter->firstMile), function ($q) use ($filter) {
+                return $q->whereIn('FistMileHub', $filter->firstMile);
+
+            })
+            ->when($filter && isset($filter->lastMile) && !empty($filter->lastMile), function ($q) use ($filter) {
+                return $q->whereIn('LastMileHub', $filter->lastMile);
+
+            })
+            ->when($filter && isset($filter->created_in) && $filter->created_in->start && $filter->created_in->end, function ($q) use ($filter) {
+                return $q->whereBetween('created_at', [Carbon::parse($filter->created_in->start), Carbon::parse($filter->created_in->end)]);
+
+            })
+            ->when($filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end, function ($q) use ($filter) {
+                return $q->whereBetween('updated_at', [Carbon::parse($filter->updated_in->start), Carbon::parse($filter->updated_in->end)]);
+
+            });
+    }
+    public function scopeInHub($query, $hub)
+    {
+        return $query->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider);
+    }
+
+    public function scopeShipper($query)
+    {
+        if (auth()->user()->isEmployee()) {
+            return $query;
+        }
+        return $query->where('ShipperID', auth()->id());
+    }
+    public function scopeInWorkFlow($query, $id)
+    {
+        return $query->where('WorkflowID', $id);
+    }
+    public function scopeReadyShip($query)
+    {
+        return $query
+            ->where('StatusID', 2);
+    }
     public function shippingMethod()
     {
         return $this->belongsTo(WorkFlow::class, 'ShippingMethod');
@@ -118,21 +174,17 @@ class Package extends Model
     }
     public static function generateTrackingNumber(Package $package)
     {
-        // TODO get the configuration from table
         $user = User::find($package->CreatedBy);
-        $unique = new UniqueTrackingNumber($user);
         $prefix = $user->TrackingPrefix;
         $autoTn = $package->cutomerCity->shipmentProvider->AutoTN;
         if ($autoTn) {
             $prefix_ = $prefix ? $prefix : "MC";
-            $tracking_numer = null;
+            $tracking_number = null;
             do {
                 $randomNumber = random_int(10000000, 99999999);
-                $tracking_numer = $prefix_ . $randomNumber;
-            } while (!is_null(Package::where('FistMileHub', $user->CurrentShipmentProvider)->where('TrackingNumber', $tracking_numer)->select('TrackingNumber')->first()));
-
-            // } while ($unique->passes('',$tracking_numer));
-            return $tracking_numer;
+                $tracking_number = $prefix_ . $randomNumber;
+            } while (!is_null(Package::where('FistMileHub', $user->CurrentShipmentProvider)->where('TrackingNumber', $tracking_number)->select('TrackingNumber')->first()));
+            return $tracking_number;
         } else {
             $track = TPLTrackingNumber::where('ShipmentProvider', $package->ShipmentProviderID)->where('Status', false)->first();
             if (!$track) {

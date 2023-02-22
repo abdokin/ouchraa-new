@@ -32,7 +32,8 @@ class StatusSeeder extends Seeder
             array('id' => '17', 'StatusName' => 'Not Picked', 'StatusStyle' => 'bg-danger'),
             array('id' => '18', 'StatusName' => 'Completed', 'StatusStyle' => 'bg-success'),
             array('id' => '19', 'StatusName' => 'Not Accepted', 'StatusStyle' => 'bg-danger'),
-
+            array('id' => '20', 'StatusName' => 'received', 'StatusStyle' => 'bg-success'),
+            array('id' => '21', 'StatusName' => 'Not received', 'StatusStyle' => 'bg-danger'),
         );
 
         collect($MO_Status)->each(function ($m) {

@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('packages/cancels', [PackageController::class, 'cancels'])->name('package.cancels');
     Route::get('packages/label/{package}', [PackageController::class, 'exportLabel'])->name('package.label');
     Route::get('labels/package', [PackageController::class, 'exportLabels'])->name('package.labels');
-    Route::get('export/packages', [PackageController::class, 'export'])->name('package.export');
+    Route::post('export/packages', [PackageController::class, 'export'])->name('package.export');
 
 
     Route::patch('update-em/{package}', [PackageController::class, 'updateByEm'])->name('package.updateEm');
@@ -64,24 +64,30 @@ Route::middleware('auth')->group(function () {
 
     // pick 
     Route::get('/pick-up/packages', [PickUpController::class, 'packages'])->name('pickup.packages');
+    Route::post('/pick-up/packages', [PickUpController::class, 'packages'])->name('pickup.packages');
+
+
     Route::get('/pick-up/shippers', [PickUpController::class, 'shippers'])->name('pickup.shippers');
     Route::post('/pick-up/shippers/{user}', [PickUpController::class, 'updateDriver'])->name('pickup.shippers.updateDriver');
 
     Route::get('/pick-up/dropoff', [PickUpController::class, 'dropoff'])->name('pickup.dropoff');
-
+    Route::post('/pick-up/dropoff', [PickUpController::class, 'dropoff'])->name('pickup.dropoff');
     // pick up
     Route::post('/pick-up/pickup/{package}', [PickUpController::class, 'pickup'])->name('package.pickup');
     Route::post('/pick-up/not-pickup/{package}', [PickUpController::class, 'notpickup'])->name('package.notpicked');
 
-
+    Route::post('/pick-up/pickup-all', [PickUpController::class, 'pickedAll'])->name('package.pickedAll');
     Route::post('/pick-up/not-pickup-all', [PickUpController::class, 'notPickAll'])->name('package.notpickedAll');
 
 
-
-    // dropp
+    // drop
 
     Route::post('/pick-up/drop-off/{package}', [PickUpController::class, 'dropped'])->name('package.dropped');
     Route::post('/pick-up/drop-off-all', [PickUpController::class, 'droppedAll'])->name('package.droppedAll');
+    Route::post('/pick-up/export-drop-off', [PickUpController::class, 'exportDropOff'])->name('package.exportDropOff');
+    Route::post('/pick-up/export-delivery-off', [PickUpController::class, 'exportDelivery'])->name('package.exportDelivery');
+
+
 
     Route::post('/pick-up/not-accepted/{package}', [PickUpController::class, 'notAccepted'])->name('package.notAccepted');
     Route::post('/pick-up/not-accepted-all', [PickUpController::class, 'notAcceptedAll'])->name('package.notAcceptedAll');

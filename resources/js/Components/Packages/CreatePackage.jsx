@@ -56,7 +56,6 @@ export function CreatePackageModal({
                 onSuccess: () => {
                     reset(), close();
                 },
-                onFinish: () => {},
             });
             // return;
         } else {
@@ -65,13 +64,11 @@ export function CreatePackageModal({
                 onSuccess: () => {
                     reset(), close();
                 },
-                onFinish: () => {},
             });
         }
         if (errors && Object.keys(errors).length > 0) {
             toast["error"](errors[Object.keys(errors)[0]]);
         }
-        reset();
     };
 
     const shippingMethod = shippingMethods.filter((it) => {
@@ -82,7 +79,7 @@ export function CreatePackageModal({
         <form onSubmit={onSubmit}>
             <Toaster position="top-center" duration="4000" />
             {/* <div className="modal-content"> */}
-            {JSON.stringify(Object.keys(errors).length)}
+            {/* {JSON.stringify(Object.keys(errors).length)} */}
             <div className="modal-header">
                 <h5 className="modal-title">Create</h5>
                 <button

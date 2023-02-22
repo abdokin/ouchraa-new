@@ -9,6 +9,7 @@ import {
     DateRangePicker,
     Select,
     SelectNotMulti,
+    SelectSingle,
 } from "../../Components/Filters/Index";
 import ConfigLayout from "../../Layouts/Config";
 import { Inertia } from "@inertiajs/inertia";
@@ -347,7 +348,7 @@ const Table = ({
                                                     : "badge-danger"
                                             }`}
                                         >
-                                            {it.status ? "Enabled" : "Desable"}
+                                            {it.status ? "Enabled" : "Disable"}
                                         </span>
                                     </td>
                                     <td>
@@ -364,7 +365,7 @@ const Table = ({
                                     <td>
                                         <button
                                             id="Edit"
-                                            dataCity="421"
+                                            // dataCity="421"
                                             type="button"
                                             onClick={() => openEdit(it)}
                                             className="btn btn-sm btn-success ml-2"
@@ -410,16 +411,14 @@ const Head = ({ openCreate, selected }) => {
         });
     };
     const { hubs, cities } = usePage().props;
-    const [selectedHubType, setSelectedHubTypes] = useLocalStorage(
-        "cities_hubtype",
+    const [selectedHubType, setSelectedHubTypes] = useState(
         []
     );
-    const [selectedCities, setSelectedCities] = useLocalStorage(
-        "cities_cities",
+    const [selectedCities, setSelectedCities] = useState(
         []
     );
 
-    const [status, setStatus] = useLocalStorage("cities_hubstatus", []);
+    const [status, setStatus] = useState([]);
     const [createdAt, setCreatedAt] = useState([
         {
             startDate: new Date(),
@@ -441,16 +440,18 @@ const Head = ({ openCreate, selected }) => {
     };
     return (
         <div id="FilterSelector" className="panel panel-light">
-            <div className="panel-body p-3">
+            {/* <div className="panel-body p-3">
                 <div className="form-row">
                     <div className="form-group col-md-2">
                         <Select
-                            options={cities.map((it) => {
+                            title={"select city"}
+                            data={cities?.map((it) => {
                                 return {
                                     value: it.id,
                                     label: it.localite,
                                 };
                             })}
+                            id={"cities_select"}
                             label={"Cities"}
                             onChange={setSelectedCities}
                             value={selectedCities}
@@ -458,23 +459,27 @@ const Head = ({ openCreate, selected }) => {
                     </div>
                     <div className="form-group col-md-2">
                         <Select
-                            options={hubs.map((it) => {
+                            title={"select hub"}
+                            data={hubs?.map((it) => {
                                 return {
                                     value: it.id,
                                     label: it.ShipmentProviderName,
                                 };
                             })}
                             label={" Last Mile Hub  "}
+                            id={"hub_select"}
                             onChange={setSelectedHubTypes}
                             value={selectedHubType}
                         />{" "}
                     </div>
                     <div className="form-group col-md-2">
-                        <SelectNotMulti
-                            label={"Status"}
+                        <SelectSingle
+                            // label={"Status"}
+                            title={"select status"}
+                            id={"status_select"}
                             onChange={setStatus}
                             value={status}
-                            options={[
+                            data={[
                                 { value: 1, label: "Enable" },
                                 { value: 0, label: "Disable" },
                             ]}
@@ -497,7 +502,7 @@ const Head = ({ openCreate, selected }) => {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="panel-footer d-flex justify-content-between">
                 <div>
                     <div className="dropdown mr-l">
@@ -519,7 +524,6 @@ const Head = ({ openCreate, selected }) => {
                             <button
                                 onClick={() => Enable(true)}
                                 id="MultiEnableHubs"
-                                data-packageid=""
                                 className="dropdown-item "
                             >
                                 <i className="fas fa-unlock"></i>
@@ -528,7 +532,6 @@ const Head = ({ openCreate, selected }) => {
                             <button
                                 onClick={() => Enable(false)}
                                 id="MultiDisableHubs"
-                                data-packageid=""
                                 className="dropdown-item "
                             >
                                 <i className="fas fa-lock"></i>
@@ -566,7 +569,7 @@ const Head = ({ openCreate, selected }) => {
                                 : ""
                         }${
                             status.length > 0
-                                ? `&filter[status]=${status.map(
+                                ? `&filter[status]=${status?.map(
                                       (it) => it.value
                                   )}`
                                 : ""

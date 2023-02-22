@@ -23,8 +23,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Excel;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 // use Illuminate\Http\Request;
 
@@ -34,91 +32,21 @@ class PackageController extends Controller
     public function indexWithFilers(Request $request)
     {
         $data = json_decode($request->getContent());
-        // dd(json_decode($request->getContent())->filter);
-
         if (!$data->filter) {
             // 
         }
         $filter = $data->filter;
         $isEmployee = auth()->user()->isEmployee();
-        $packages = null;
         $cities = City::where('status', true)->get();
-        // dd($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end);
-        $shippers = [];
-        if ($isEmployee) {
-            $shippers = Role::where('slug', 'shipper')->first()->users;
-            $packages = Package::
-                when($data->filter && isset($filter->status) && !empty($filter->status), function ($q) use ($filter) {
-                    return $q->whereIn('StatusID', $filter->status);
-
-                })
-                ->when($data->filter && isset($filter->workFlow) && !empty($filter->workFlow), function ($q) use ($filter) {
-                    return $q->whereIn('WorkflowID', $filter->workFlow);
-
-                })
-                ->when($data->filter && isset($filter->customerCity) && !empty($filter->customerCity), function ($q) use ($filter) {
-                    return $q->whereIn('CustomerCity', $filter->customerCity);
-
-                })
-                ->when($data->filter && isset($filter->firstMile) && !empty($filter->firstMile), function ($q) use ($filter) {
-                    return $q->whereIn('FistMileHub', $filter->firstMile);
-
-                })
-                ->when($data->filter && isset($filter->lastMile) && !empty($filter->lastMile), function ($q) use ($filter) {
-                    return $q->whereIn('LastMileHub', $filter->lastMile);
-
-                })
-                ->when($data->filter && isset($filter->created_in) && $filter->created_in->start && $filter->created_in->end, function ($q) use ($filter) {
-                    return $q->whereBetween('created_at', [Carbon::parse($filter->created_in->start), Carbon::parse($filter->created_in->end)]);
-
-                })
-                ->when($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end, function ($q) use ($filter) {
-                    return $q->whereBetween('updated_at', [Carbon::parse($filter->updated_in->start), Carbon::parse($filter->updated_in->end)]);
-
-                })
-                ->latest()
-                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
-                ->paginate();
-
-            //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
-        } else {
-            $packages = Package::
-                when($data->filter && isset($filter->status) && !empty($filter->status), function ($q) use ($filter) {
-                    return $q->whereIn('StatusID', $filter->status);
-
-                })
-                ->when($data->filter && isset($filter->workFlow) && !empty($filter->workFlow), function ($q) use ($filter) {
-                    return $q->whereIn('WorkflowID', $filter->workFlow);
-
-                })
-                ->when($data->filter && isset($filter->customerCity) && !empty($filter->customerCity), function ($q) use ($filter) {
-                    return $q->whereIn('CustomerCity', $filter->customerCity);
-
-                })
-                ->when($data->filter && isset($filter->firstMile) && !empty($filter->firstMile), function ($q) use ($filter) {
-                    return $q->whereIn('FistMileHub', $filter->firstMile);
-
-                })
-                ->when($data->filter && isset($filter->lastMile) && !empty($filter->lastMile), function ($q) use ($filter) {
-                    return $q->whereIn('LastMileHub', $filter->lastMile);
-
-                })
-                ->when($data->filter && isset($filter->created_in) && $filter->created_in->start && $filter->created_in->end, function ($q) use ($filter) {
-                    return $q->whereBetween('created_at', [Carbon::parse($filter->created_in->start), Carbon::parse($filter->created_in->end)]);
-
-                })
-                ->when($data->filter && isset($filter->updated_in) && $filter->updated_in->start && $filter->updated_in->end, function ($q) use ($filter) {
-                    return $q->whereBetween('updated_at', [Carbon::parse($filter->updated_in->start), Carbon::parse($filter->updated_in->end)]);
-
-                })
-
-                ->latest()
-                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
-                ->paginate()
-                ->appends(request()->query());
-        }
+        $shippers = auth()->user()->Shippers();
+        $packages = Package::
+            FilterIndex($filter)
+            ->latest()
+            ->InHub(auth()->user()->CurrentShipmentProvider)
+            ->Shipper()
+            ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+            ->paginate()
+            ->appends(request()->query());
         $shippingMethods = WorkFlow::all();
         return inertia('Packages', [
             'packages' => $packages,
@@ -131,25 +59,14 @@ class PackageController extends Controller
     public function index()
     {
         $isEmployee = auth()->user()->isEmployee();
-        $packages = null;
         $cities = City::where('status', true)->get();
-        $shippers = [];
-        if ($isEmployee) {
-            $shippers = Role::where('slug', 'shipper')->first()->users;
-            $packages = Package::latest()
-                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
-                ->paginate();
+        $shippers = auth()->user()->Shippers();
+        $packages = Package::latest()
+            ->InHub(auth()->user()->CurrentShipmentProvider)
+            ->Shipper()
+            ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+            ->paginate();
 
-            //            $packages = Package::latest()->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)->->paginate(auth()->user()->page_size);
-        } else {
-            $packages = Package::latest()
-                ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
-                ->where('ShipperID', auth()->id())
-
-                ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
-                ->paginate();
-        }
         $shippingMethods = WorkFlow::all();
         return inertia('Packages', [
             'packages' => $packages,
@@ -162,12 +79,10 @@ class PackageController extends Controller
 
     public function show(Package $package)
     {
-        return $package;
+        // return $package;
     }
     public function storeEm(StorePackageEmRequest $request)
     {
-        // new UniqueReference(auth()->user())
-        // dd('not implemented');
         if (auth()->user()->cannot('create', Package::class)) {
             return back()->with([
                 'type' => 'error',
@@ -272,11 +187,9 @@ class PackageController extends Controller
             ]);
         }
 
-        // User::create($attr);
-
         return back()->with([
             'type' => 'success',
-            'message' => 'User has been created',
+            'message' => 'Package has been created',
         ]);
     }
     public function store(StorePackageRequest $request)
@@ -290,7 +203,6 @@ class PackageController extends Controller
         $validated = $request->toArray();
         $loggedUser = auth()->user();
         $lastMileHub = City::find($validated['RecipientCity']);
-        // dd($lastMileHub);
         if (!$lastMileHub->shipmentProvider) {
             throw ValidationException::withMessages([
                 'RecipientCity' => 'This city not supported.',
@@ -331,8 +243,6 @@ class PackageController extends Controller
             'FistMileHub' => $loggedUser->CurrentShipmentProvider,
             'LastMileHub' => $lastMileHub->id,
         ]);
-        // User::create($attr);
-
         return back()->with([
             'type' => 'success',
             'message' => 'Package has been created',
@@ -354,12 +264,11 @@ class PackageController extends Controller
     {
         // dd($package);
         $attr = $request->toArray();
+        // dd($attr);
         if (!isset($attr['ShipperId'])) {
-            // $shipper = User::find($attr['ShipperId']);
-            // $package->ShipperID = $attr['ShipperId'];
             $package->ShipperName = $attr['ShipperName'];
             $package->ShipperPhone = $attr['ShipperPhoneNumber'];
-            if (isset($atrr['ShipperEmail'])) {
+            if (isset($attr['ShipperEmail'])) {
 
                 $package->ShipperEmail = $attr['ShipperEmail'];
             }
@@ -369,10 +278,10 @@ class PackageController extends Controller
             }
         } else {
             $shipper = User::find($attr['ShipperId']);
-            $package->ShipperID = $shipper->ShipperId;
-            $package->ShipperName = $shipper->ShipperName;
+            $package->ShipperID = $shipper->id;
+            $package->ShipperName = $shipper->UserName;
             $package->ShipperPhone = $shipper->ShipperPhone;
-            if (isset($atrr['ShipperEmail'])) {
+            if (isset($attr['ShipperEmail'])) {
 
                 $package->ShipperEmail = $shipper->ShipperEmail;
             }
@@ -399,8 +308,6 @@ class PackageController extends Controller
         $package->CustomerName = $attr['CustomerName'];
         $package->CustomerAddress = $attr['CustomerAddress'];
         $package->CustomerCity = $attr['CustomerCity'];
-        // $package->ShipmentProviderID = $attr['ShipmentProviderID'];
-        // $package->LocationID = $attr['LocationID'];
         $package->ShippingMethod = $attr['ShippingMethod'];
         $package->update();
 
@@ -417,7 +324,6 @@ class PackageController extends Controller
                 'type' => 'error',
                 'message' => 'Action Not Authorized',
             ]);
-            // return $this->sendError('You cant change this package to be ready to ship ', 'You dont have access for this action');
         }
         $package->StatusID = 2;
         $package->ActionID = 8;
@@ -438,7 +344,7 @@ class PackageController extends Controller
         if (!$packages) {
             return back()->with([
                 'type' => 'error',
-                'message' => 'Error occured'
+                'message' => 'Error occurred'
 
             ]);
         }
@@ -464,7 +370,7 @@ class PackageController extends Controller
         if (!$packages) {
             return back()->with([
                 'type' => 'error',
-                'message' => 'Error occured'
+                'message' => 'Error occurred'
 
             ]);
         }
@@ -477,7 +383,7 @@ class PackageController extends Controller
         }
         return back()->with([
             'type' => 'success',
-            'message' => 'Package has been cancled',
+            'message' => 'Package has been canceled',
         ]);
     }
     public function cancel(Package $package)
@@ -493,13 +399,14 @@ class PackageController extends Controller
         $package->update();
         return back()->with([
             'type' => 'success',
-            'message' => 'Package has been cancled',
+            'message' => 'Package has been canceled',
         ]);
     }
-  
+
 
     public function exportLabel(Package $package)
     {
+        // dd("here");
         if (auth()->user()->cannot('exportLabel', $package)) {
             return back()->with([
                 'type' => 'error',
@@ -510,7 +417,7 @@ class PackageController extends Controller
         $code = auth()->user()->shipmentProvider->template->TemplateCode;
         $bladeView = Blade::compileString($code);
         $array = [
-            'shipmentProviderOwner' => "Abdo KIng",
+            'shipmentProviderOwner' => "Ouchraa",
             'link' => \Milon\Barcode\Facades\DNS1DFacade::getBarcodePNG('4', 'C39+'),
             'fastMileHub' => $package->FirstMile->ShipmentProviderName,
             'createdAt' => $package->created_at,
@@ -530,18 +437,15 @@ class PackageController extends Controller
         $content = RenderTemplate::render($bladeView, $array);
         $package->Printed = true;
         $package->update();
-        // $random1 = Str::random(8);
         $filename = 'Label-' . Str::random(20);
         Storage::disk('public')->put('labels/' . $filename . '.html', $content);
         $url = Storage::url("labels/" . $filename . '.html');
-        // dd($url);
         return Inertia::location($url);
 
     }
     public function exportLabels(Request $request)
     {
         $data = json_decode($request->input('data'));
-        // dd($);
         $code = auth()->user()->shipmentProvider->template->TemplateCode;
         $bladeView = Blade::compileString($code);
         $packages = Package::whereIn('id', $data)->get();
@@ -555,7 +459,7 @@ class PackageController extends Controller
         foreach ($packages as $package) {
             if ($request->user()->can('exportLabel', $package)) {
                 $array = [
-                    'shipmentProviderOwner' => "Abdo KIng",
+                    'shipmentProviderOwner' => "Ouchraa",
                     'link' => \Milon\Barcode\Facades\DNS1DFacade::getBarcodePNG('4', 'C39+'),
                     'fastMileHub' => $package->FirstMile->ShipmentProviderName,
                     'createdAt' => $package->created_at,
@@ -578,7 +482,7 @@ class PackageController extends Controller
                 $package->update();
             }
         }
-        $filename = Str::random(20);
+        $filename = 'Label-' . Str::random(20);
         Storage::disk('public')->put('labels/' . $filename . '.html', $content);
         $url = Storage::url("labels/" . $filename . '.html');
         return Inertia::location($url);
@@ -587,10 +491,10 @@ class PackageController extends Controller
     }
     public function export(Request $request)
     {
-        $filename = Str::random(20);
-        \Maatwebsite\Excel\Facades\Excel::store(new PackageExport(auth()->user()->isEmployee()), "exports/packages/" . $filename . '.csv', 'public', \Maatwebsite\Excel\Excel::CSV);
-
-
+        $data = json_decode($request->getContent());
+        $filters = $data->filter;
+        $filename = 'EXPORT-' . Str::random(20);
+        \Maatwebsite\Excel\Facades\Excel::store(new PackageExport(auth()->user()->isEmployee(), $filters, null), "exports/packages/" . $filename . '.csv', 'public', \Maatwebsite\Excel\Excel::CSV);
         $url = Storage::url("exports/packages/" . $filename . '.csv');
         return Inertia::location($url);
     }

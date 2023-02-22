@@ -121,7 +121,7 @@ export function EditPackageModale({
                             <div className="col-md-9 mt-3">
                                 <h6>
                                     <i className="fas fa-user-tie mr-1"></i>{" "}
-                                    Shipper Informations
+                                    Shipper Information
                                 </h6>
                             </div>
                             <div className="col-md-3  mt-3">
@@ -148,7 +148,7 @@ export function EditPackageModale({
                                     id={"ShipperId"}
                                     title="Select shipper name..."
                                     onChange={(v) => {
-                                        onChangeId("ShipperCity", v);
+                                        onChangeId("ShipperId", v);
                                     }}
                                     value={data.ShipperId}
                                     data={shippers.map((it) => {
@@ -291,7 +291,7 @@ export function EditPackageModale({
                     <div className="col-md-12">
                         <h6>
                             <i className="fas fa-map-marker-alt mr-1 mt-4"></i>{" "}
-                            Customer Informations
+                            Customer Information
                         </h6>
                     </div>
                 </div>
@@ -358,10 +358,10 @@ export function EditPackageModale({
                         </label>
                         <SelectSingle
                             value={data.CustomerCity}
-                            id={"RecipientCity"}
+                            id={"CustomerCity"}
                             title="Customer City Select"
                             onChange={(v) => {
-                                onChangeId("RecipientCity", v);
+                                onChangeId("CustomerCity", v);
                             }}
                             data={cities.map((it) => {
                                 return { value: it.id, label: it.localite };
@@ -414,7 +414,7 @@ export function EditPackageModale({
                     <div className="col-md-12">
                         <h6>
                             <i className="fas fa-box mr-1 mt-4"></i> Package
-                            Informations
+                            Information
                         </h6>
                     </div>
                 </div>

@@ -27,12 +27,12 @@ class UpdatePackageEmRequest extends FormRequest
         return [
             'ShipperId' => ['required_without:ShipperName', 'exists:users,id'],
             'ShipperName' => ['required_without:ShipperId'],
-            'ShipperPhoneNumber' => ['required_without:ShipperId'],
+            'ShipperPhoneNumber' => ['required_without:ShipperId', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
             'ShipperAddress' => ['required_without:ShipperId'],
             'ShipperEmail' => [''],
             'ShipperCin' => [''],
             'CustomerName' => ['required'],
-            'CustomerPhone' => ['required'],
+            'CustomerPhone' => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
             'CustomerAddress' => ['required'],
             'CustomerEmail' => ['email'],
             'Weight' => 'required|min:0|numeric',
@@ -47,7 +47,7 @@ class UpdatePackageEmRequest extends FormRequest
             'CustomerCity' => 'required|exists:cities,id',
             'ShipperCity' => ['exists:cities,id', 'required_without:ShipperId'],
             'ProductDescription' => '',
-            'ShipperCin' => '',
+            // 'ShipperCin' => '',
             'CustomerCin' => '',
             'ShippingMethod' => 'required|exists:work_flows,id',
         ];

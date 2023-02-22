@@ -17,11 +17,8 @@ export default function DropOff(props) {
     const [edit, setEdit] = useState(false);
 
     const [packageCurrent, setPackageCurrent] = useState();
-    // const [selectedRows, setSelectedRows] = useState([]);
 
     const [map, { set, setAll, remove, reset }] = useMap();
-    // const [page,setPage] = useState(10);
-    // console.log("package", props.packages);
     return (
         <>
             <div className="container-fluid py-4">
@@ -108,7 +105,7 @@ export default function DropOff(props) {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="col-sm-12 col-md-6 pr-5 pb-2">
+                                {/* <div className="col-sm-12 col-md-6 pr-5 pb-2">
                                     <div
                                         id="tabledata_filter"
                                         className="dataTables_filter"
@@ -123,7 +120,7 @@ export default function DropOff(props) {
                                             />
                                         </label>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <Table
                                 packages={props.packages.data}
@@ -652,6 +649,10 @@ function Table({
                             </tr>
                         );
                     })}
+
+                    {packages.length == 0 && (
+                        <div className="m-2 p-2">There is Not data</div>
+                    )}
                 </tbody>
             </table>
         </>
@@ -660,6 +661,12 @@ function Table({
 
 function Head({ handleShow, workflow, rowSelected, reasons }) {
     const [filtersOpen, setFiltersOpen] = useState(false);
+    const [filters, setFilter] = useState(null);
+    const exportPackages = () => {
+        Inertia.post(route("package.exportDropOff"), {
+            filter: filters,
+        });
+    };
     const droppedAll = (ids) => {
         Inertia.post(route("package.droppedAll"), {
             data: ids,
@@ -670,11 +677,6 @@ function Head({ handleShow, workflow, rowSelected, reasons }) {
         ids.push(rowSelected[v]);
         console.log(ids);
     });
-    // const notAcceptedAll = (ids) => {
-    //     Inertia.post(route("package.notAcceptedAll"), {
-    //         data: ids,
-    //     });
-    // };
     const { data, setData, post, reset, errors } = useForm({
         data: ids,
         reasonId: -1,
@@ -771,145 +773,141 @@ function Head({ handleShow, workflow, rowSelected, reasons }) {
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb m-0 mt-1 p-0 breadcrumbs-chevron">
                             <li className="breadcrumb-item">
-                                <a href="/">Dashboard</a>
+                                <Link href="/dashboard">Dashboard</Link>
                             </li>
                             <li
                                 className="breadcrumb-item active"
                                 aria-current="page"
                             >
-                                Packages
+                                Drop Off
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <div className="d-flex gap-3  justify-content-between">
-                    <div className="dropdown ml-2">
-                        <button
-                            className="btn  btn-dark dropdown-toggle"
-                            type="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            disabled={Object.keys(rowSelected).length == 0}
-                        >
-                            <span> Action</span>{" "}
-                        </button>
-                        <div className="dropdown-menu">
-                            <button
-                                onClick={(e) => {
-                                    setChoicePicked(true);
-                                }}
-                                id="MonoReadytoShip"
-                                // dataPackageid={it.id}
-                                className="dropdown-item"
-                            >
-                                {/* <i className="fas fa-dolly-flatbed"></i> */}
-                                <span>Dropped</span>
-                            </button>
-                            <button
-                                onClick={(e) => {
-                                    setChoiceNot(true);
-                                }}
-                                id="MonoReadytoShip"
-                                // dataPackageid={it.id}
-                                className="dropdown-item"
-                            >
-                                {/* <i className="fas fa-dolly-flatbed"></i> */}
-                                <span>Not Accepted</span>
-                            </button>
-                            {/* <a
-                                href={`/labels/package?data=[${Object.values(
-                                    rowSelected
-                                )}]`}
-                                target="_blank"
-                                download={true}
-                                onClick={(e) => {
-                                    console.log(
-                                        "selected",
-                                        Object.values(rowSelected)
-                                    );
-                                }}
-                                id="DownloadLabel"
-                                // data-packageid={it.id}
-                                className="dropdown-item"
-                            >
-                                <i className="fas fa-download"></i>
-                                <span>Label Download</span>
-                            </a>
-                            <button
-                                onClick={(e) => {
-                                    setChoiceReady(true);
-                                }}
-                                id="MonoReadytoShip"
-                                // dataPackageid={it.id}
-                                className="dropdown-item"
-                            >
-                                <i className="fas fa-dolly-flatbed"></i>
-                                <span>Ready to Ship</span>
-                            </button>
-                            <button
-                                // value={it.id}
-                                id="MonoEditPackage"
-                                // data-packageid={it.id}
-                                className="dropdown-item"
-                            >
-                                <i className="fas fa-pencil-alt"></i>
-                                <span>Edit</span>
-                            </button>
-                            <a
-                                href=""
-                                id="MonoReturnCustomer"
-                                // data-packageid={it.id}
-                                className="dropdown-item"
-                            >
-                                <i className="fas fa-undo-alt"></i>
-                                <span>Customer Return</span>
-                            </a>
-                            <button
-                                href=""
-                                id="MonoCancelPackage"
-                                onClick={(e) => {
-                                    setChoiceCancel(true);
-                                }}
-                                className="dropdown-item"
-                            >
-                                <i className="fas fa-trash"></i>
-                                <span>Cancel</span>
-                            </button> */}
-                        </div>
-                    </div>
-                    <div>
-                        <button
+                <div className="d-flex gap-2  justify-content-end">
+                        {/* <button
                             onClick={() => handleShow()}
                             id="Create"
                             className="btn btn-success "
-                            // dataToggle="modal"
                             data-target="#package-create"
                         >
                             <i className="fas fa-plus-circle"></i> Create
-                        </button>
-                        <a
-                            href="/export/packages"
+                        </button> */}
+                        <button
                             id="Export"
-                            className="btn btn-primary ml-2"
+                            onClick={() => {
+                                exportPackages();
+                            }}
+                            download
+                            className="btn btn-primary"
                         >
                             <i className="fas fa-download"></i>{" "}
                             <span>Export</span>
-                        </a>
-
+                        </button>
+                        <div className="dropdown">
+                            <button
+                                className="btn  btn-dark dropdown-toggle"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                disabled={Object.keys(rowSelected).length == 0}
+                            >
+                                <span> Action</span>{" "}
+                            </button>
+                            <div className="dropdown-menu">
+                                <button
+                                    onClick={(e) => {
+                                        setChoicePicked(true);
+                                    }}
+                                    id="MonoReadyShip"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-dolly-flatbed"></i>
+                                    <span>Dropped</span>
+                                </button>
+                                <button
+                                    onClick={(e) => {
+                                        setChoiceNot(true);
+                                    }}
+                                    id="MonoReadyShip"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-dolly-flatbed"></i>
+                                    <span>Not Accepted</span>
+                                </button>
+                                <a
+                                    href={`/labels/package?data=[${Object.values(
+                                        rowSelected
+                                    )}]`}
+                                    target="_blank"
+                                    download={true}
+                                    onClick={(e) => {
+                                        console.log(
+                                            "selected",
+                                            Object.values(rowSelected)
+                                        );
+                                    }}
+                                    id="DownloadLabel"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-download"></i>
+                                    <span>Label Download</span>
+                                </a>
+                                {/* <button
+                                    onClick={(e) => {
+                                        setChoiceReady(true);
+                                    }}
+                                    id="MonoReadyShip"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-dolly-flatbed"></i>
+                                    <span>Ready to Ship</span>
+                                </button> */}
+                                {/* <button
+                                    id="MonoEditPackage"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-pencil-alt"></i>
+                                    <span>Edit</span>
+                                </button> */}
+                                {/* <a
+                                    href=""
+                                    id="MonoReturnCustomer"
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-undo-alt"></i>
+                                    <span>Customer Return</span>
+                                </a> */}
+                                {/* <button
+                                    href=""
+                                    id="MonoCancelPackage"
+                                    onClick={(e) => {
+                                        setChoiceCancel(true);
+                                    }}
+                                    className="dropdown-item"
+                                >
+                                    <i className="fas fa-trash"></i>
+                                    <span>Cancel</span>
+                                </button> */}
+                            </div>
+                        </div>
                         <button
                             id="Filter"
-                            className="btn btn-info ml-2"
+                            className="btn btn-info"
                             onClick={() => setFiltersOpen(!filtersOpen)}
                         >
                             <i className="fas fa-filter"></i> Filter
                         </button>
-                    </div>
                 </div>
             </div>
             <Collapse in={filtersOpen}>
                 <div id="example-collapse-text">
-                    <Filters />
+                    <Filters
+                        setFiltersCallBack={(d) => {
+                            setFilter(d);
+                        }}
+                    />
                 </div>
             </Collapse>
         </header>

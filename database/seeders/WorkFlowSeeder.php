@@ -23,7 +23,7 @@ class WorkFlowSeeder extends Seeder
             array('id' => '5', 'Code' => 'RDV', 'WorkflowName' => 'Reverse Delivery to vendors'),
             array('id' => '6', 'Code' => 'RPS', 'WorkflowName' => 'Reverse Pickup station'),
             array('id' => '7', 'Code' => 'RRH', 'WorkflowName' => 'Reverse Return to hub'),
-            array('id' => '8', 'Code' => 'RRC', 'WorkflowName' => 'Retrivers Return from the customers')
+            array('id' => '8', 'Code' => 'RRC', 'WorkflowName' => 'Retrievers Return from the customers')
         );
         collect($MO_Workflow)->each(function ($workFlow) {
             WorkFlow::create($workFlow);

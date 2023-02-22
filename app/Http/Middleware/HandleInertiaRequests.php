@@ -6,7 +6,6 @@ use App\Models\City;
 use App\Models\ShipmentProvider;
 use App\Models\ShipmentProviderType;
 use App\Models\Status;
-use App\Models\User;
 use App\Models\WorkFlow;
 use Illuminate\Http\Request;
 use Inertia\Middleware;

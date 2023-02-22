@@ -32,7 +32,7 @@ class UpdatePackageRequest extends FormRequest
             // 'ShipperEmail' =>[''],
             // 'ShipperCin' =>[''],
             'CustomerName' => ['required'],
-            'CustomerPhone' => ['required'],
+            'CustomerPhone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:10'],
             'CustomerAddress' => ['required'],
             'CustomerEmail' => ['email'],
             'Weight' => 'required|numeric|min:0',

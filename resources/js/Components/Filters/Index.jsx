@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, usePage } from "@inertiajs/inertia-react";
-import { useLocalStorage, useMountedState } from "react-use";
+import { usePage } from "@inertiajs/inertia-react";
+import { useMountedState } from "react-use";
 import { Inertia } from "@inertiajs/inertia";
 
-export default function Filters() {
+export default function Filters({ setFiltersCallBack, isPickUp }) {
     const { hubs, statuses, workflows, cities } = usePage().props;
     const [search, setSearch] = useState("");
 
@@ -22,9 +22,33 @@ export default function Filters() {
         start: null,
         end: null,
     });
+
+    const setFilters = () => {
+        setFiltersCallBack({
+            search,
+            workFlows: workFlows.map((it) => it.value),
+            status: status.map((it) => it.value),
+            cutomer_city: cutomer_city.map((it) => it.value),
+            firstMile: firstMile.map((it) => it.value),
+            lastMile: lastMile.map((it) => it.value),
+            createdAt,
+            updateAt,
+        });
+    };
+    useEffect(() => {
+        setFilters();
+    }, [
+        status,
+        cutomer_city,
+        createdAt,
+        updateAt,
+        lastMile,
+        firstMile,
+        search,
+        workFlows,
+    ]);
     function reset() {
-        // setCreatedAt()
-        Inertia.get(route("packages.index"));
+        Inertia.get("");
     }
     return (
         <>
@@ -54,23 +78,24 @@ export default function Filters() {
                                 />
                             </div>
                         </div>
-                        <div className="form-group col-md-3">
-                            <Select
-                                label={"Work Flow"}
-                                id={"work_flow_filter"}
-                                data={workflows.map((it) => {
-                                    return {
-                                        value: it.id,
-                                        label: it.WorkflowName,
-                                    };
-                                })}
-                                title={"Select A workflow"}
-                                onChange={(data) => {
-                                    setWorkFlows(data);
-                                    // console.log(e.target.value);
-                                }}
-                            />
-                        </div>
+                        {isPickUp && (
+                            <div className="form-group col-md-3">
+                                <Select
+                                    label={"Work Flow"}
+                                    id={"work_flow_filter"}
+                                    data={workflows.map((it) => {
+                                        return {
+                                            value: it.id,
+                                            label: it.WorkflowName,
+                                        };
+                                    })}
+                                    title={"Select A workflow"}
+                                    onChange={(data) => {
+                                        setWorkFlows(data);
+                                    }}
+                                />
+                            </div>
+                        )}
                         <div className="form-group col-md-3">
                             <Select
                                 label={"Status"}
@@ -117,7 +142,7 @@ export default function Filters() {
                                 setState={setUpdatedAt}
                             />
                         </div>
-                        <div className="form-group col-md-3">
+                        {/* <div className="form-group col-md-3">
                             <Select
                                 label={"First Mile"}
                                 id={"first_mile_filter"}
@@ -133,7 +158,7 @@ export default function Filters() {
                                     // console.log(e.target.value);
                                 }}
                             />
-                        </div>
+                        </div> */}
                         <div className="form-group col-md-3">
                             <Select
                                 label={"Last Mile"}
@@ -158,19 +183,9 @@ export default function Filters() {
                         type="submit"
                         className="btn btn-primary"
                         onClick={() => {
-                            console.log({
-                                status: status.map((it) => it.value),
-                                workFlow: workFlows.map((it) => it.value),
-                                customerCity: cutomer_city.map(
-                                    (it) => it.value
-                                ),
-                                lastMile: lastMile.map((it) => it.value),
-                                firstMile: firstMile.map((it) => it.value),
-                                created_in: createdAt,
-                                updated_in: updateAt,
-                            });
-                            Inertia.post(route("packages.filters"), {
+                            Inertia.post("", {
                                 filter: {
+                                    search,
                                     status: status.map((it) => it.value),
                                     workFlow: workFlows.map((it) => it.value),
                                     customerCity: cutomer_city.map(
@@ -205,7 +220,6 @@ export function Select({ data, title, onChange, id, label }) {
     const isMounted = useMountedState();
     useEffect(() => {
         if (isMounted) {
-            // alert("cancled");
             $(`#select-drop-${id}`).selectpicker();
         }
     });
@@ -245,14 +259,18 @@ export function Select({ data, title, onChange, id, label }) {
                 data-live-search="true"
                 data-actions-box="true"
                 onChange={(e) => {
-                    console.log(getListOfSelected(id));
+                    // console.log(getListOfSelected(id));
                     onChange(getListOfSelected(id));
                     // console.log()
                 }}
                 data-selected-text-format="count"
             >
-                {data.map((it) => {
-                    return <option value={it?.value}>{it?.label}</option>;
+                {data.map((it, index) => {
+                    return (
+                        <option key={index} value={it?.value}>
+                            {it?.label}
+                        </option>
+                    );
                 })}
             </select>
             <div className="dropdown-menu ">
@@ -301,16 +319,12 @@ export function Select({ data, title, onChange, id, label }) {
     );
 }
 
-
-export function SelectSingle({ data, title, onChange, id, label ,value}) {
+export function SelectSingle({ data, title, onChange, id,label, value }) {
     const ref = useRef(null);
     const isMounted = useMountedState();
     useEffect(() => {
         if (isMounted) {
-            // alert("cancled");
-
-            $(`#select-drop-${id}`).selectpicker('val',value);
-            
+            $(`#select-drop-${id}`).selectpicker("val", value);
         }
     });
 
@@ -340,25 +354,23 @@ export function SelectSingle({ data, title, onChange, id, label ,value}) {
             className="dropdown bootstrap-select show-tick form-control"
             id={`select-${id}`}
         >
-            {/* <label htmlFor={id}>{label}</label> */}
             <select
                 className="selectpicker form-control"
                 id={`select-drop-${id}`}
                 title={title}
-                // multiple="multiple"
                 data-live-search="true"
                 data-actions-box="true"
-                // value={value ?? null}
                 onChange={(e) => {
-                    // console.log(getListOfSelected(id));
-                    // onChange(getListOfSelected(id);
-                    onChange(e.target.value)
-                    // console.log()
+                    onChange(e.target.value);
                 }}
                 data-selected-text-format="count"
             >
-                {data.map((it) => {
-                    return <option value={it?.value}>{it?.label}</option>;
+                {data.map((it, index) => {
+                    return (
+                        <option key={index} value={it?.value}>
+                            {it?.label}
+                        </option>
+                    );
                 })}
             </select>
             <div className="dropdown-menu ">
@@ -441,7 +453,7 @@ export function DateRangePicker({ label, id, state, setState }) {
             "cancel.daterangepicker",
             function (ev, picker) {
                 $(`input[name="${id}"`).val("");
-                alert("cancled");
+                // alert("cancled");
                 setState(null);
             }
         );

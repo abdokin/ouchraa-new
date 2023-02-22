@@ -55,14 +55,24 @@ class User extends Authenticatable
         'ShipmentProviderAccess' => 'array'
 
     ];
+    public function Shippers()
+    {
+        if ($this->isEmployee()) {
 
-    public function setPasswordAttribute($password) {
+            return Role::where('slug', 'shipper')->first()->users;
+        }
+        return null;
+
+    }
+
+    public function setPasswordAttribute($password)
+    {
         $this->attributes['password'] = bcrypt($password);
     }
 
     public function shipmentProviderAccess()
     {
-        return ShipmentProvider::whereIn('id',$this->ShipmentProviderAccess)->with('owner')->get();
+        return ShipmentProvider::whereIn('id', $this->ShipmentProviderAccess)->with('owner')->get();
     }
     public function currentShipmentProvider()
     {
@@ -75,7 +85,7 @@ class User extends Authenticatable
     public function packagesTotal()
     {
         // RenderTemplate::render()
-        return $this->hasMany(Package::class, 'ShipperID')->where('StatusID',2);
+        return $this->hasMany(Package::class, 'ShipperID')->where('StatusID', 2);
     }
     public function packages()
     {
@@ -85,7 +95,7 @@ class User extends Authenticatable
     public function packageTotalReadyToShip()
     {
         // RenderTemplate::render()
-        return $this->packages()->where('StatusID',2);
+        return $this->packages()->where('StatusID', 2);
     }
 
     public function uploadHistory()
@@ -94,7 +104,7 @@ class User extends Authenticatable
     }
     public function city()
     {
-        return $this->belongsTo(City::class,'ShipperCity')->with('shipmentProvider');
+        return $this->belongsTo(City::class, 'ShipperCity')->with('shipmentProvider');
     }
     public function shippinOptions()
     {

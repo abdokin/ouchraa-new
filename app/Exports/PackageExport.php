@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Package;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -14,12 +15,17 @@ class PackageExport implements FromQuery, WithHeadings, WithMapping, WithHeading
 
     use Exportable;
     public $isEmployee;
+    public $filters;
+    public $workFlow;
     /**
      * @param boolean $isEmployee
      */
-    public function __construct($isEmployee)
+    public function __construct($isEmployee, $filters, $workFlow)
     {
         $this->isEmployee = $isEmployee;
+        $this->filters = $filters;
+        $this->workFlow = $workFlow;
+
     }
     public function map($package): array
     {
@@ -74,7 +80,23 @@ class PackageExport implements FromQuery, WithHeadings, WithMapping, WithHeading
 
     public function query()
     {
-        return Package::query()->with('createdBy', 'updatedBy', 'status', 'driver', 'lastMile', 'FirstMile');
+        $packages = Package::
+            query()
+            ->FilterIndex($this->filters)
+            ->when(!is_null($this->workFlow), function ($q) {
+                if ($this->workFlow == 1) {
+
+                    return $q->where('WorkflowID', $this->workFlow)
+                        ->whereIn('StatusID', [20, 21, 2]);
+                } else {
+                    return $q->where('WorkflowID', $this->workFlow)
+                        ->whereIn('StatusID', [17, 3, 2]);
+                }
+            })
+            ->where('ShipmentProviderID', auth()->user()->CurrentShipmentProvider)
+            ->with('status', 'cutomerCity', 'shipperCity', 'updatedBy', 'createdBy', 'workFlow', 'FirstMile', 'LastMile', 'driver', 'History', 'shippingMethod')
+            ->latest();
+        return $packages;
     }
     public function headings(): array
     {
@@ -94,7 +116,7 @@ class PackageExport implements FromQuery, WithHeadings, WithMapping, WithHeading
             'WEIGHT',
             'SHIPPING FEE',
             'DECLARED VALUE',
-            'PROOF DISTRIBUTE DOBJECT',
+            'PROOF DISTRIBUTE OBJECTS',
             'FRAGILE',
             'CHECK PACKAGE',
             'MASTER BAG',
